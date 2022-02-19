@@ -2,20 +2,22 @@ package com.ipcoding.colorfulshoppinglist.feature.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.ipcoding.colorfulshoppinglist.R
+import com.ipcoding.colorfulshoppinglist.feature.presentation.util.Screen
 import com.ipcoding.colorfulshoppinglist.ui.theme.AppTheme
+import com.ipcoding.colorfulshoppinglist.feature.presentation.add_edit_item.AddEditItemScreen
+import com.ipcoding.colorfulshoppinglist.feature.presentation.camera_open.CameraOpenScreen
+import com.ipcoding.colorfulshoppinglist.feature.presentation.items.ItemsScreen
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -23,52 +25,58 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AppTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
                     color = AppTheme.colors.background
                 ) {
-                    Greeting("Android")
+                    val navController = rememberNavController()
+                    NavHost(
+                        navController = navController,
+                        startDestination = Screen.ItemsScreen.route
+                    ) {
+                        composable(route = Screen.ItemsScreen.route) {
+                            ItemsScreen(navController = navController)
+                            BackHandler(true) {}
+                        }
+                        composable(
+                            route = Screen.AddEditItemScreen.route +
+                                    "?itemId={itemId}&itemColor={itemColor}",
+                            arguments = listOf(
+                                navArgument(
+                                    name = "itemId"
+                                ) {
+                                    type = NavType.IntType
+                                    defaultValue = -1
+                                },
+                                navArgument(
+                                    name = "itemColor"
+                                ) {
+                                    type = NavType.IntType
+                                    defaultValue = -1
+                                },
+                            )
+                        ) {
+                            val color = it.arguments?.getInt("itemColor") ?: -1
+                            AddEditItemScreen(
+                                navController = navController,
+                                itemColor = color
+                            )
+                        }
+                        composable(route = Screen.CameraOpenScreen.route) {
+                            CameraOpenScreen(getDirectory())
+                            BackHandler(true) {}
+                        }
+                    }
                 }
             }
         }
     }
-}
 
-@Composable
-fun Greeting(name: String) {
-    Box(
-        modifier = Modifier.height(AppTheme.dimensions.spaceExtraMedium),
-        contentAlignment = Alignment.Center
-    ) {
-        Box(
-            modifier = Modifier
-                .padding(AppTheme.dimensions.spaceSuperSmall)
-                .background(
-                    color = AppTheme.colors.background,
-                    shape = AppTheme.customShapes.roundedCornerShape
-                )
-                .fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = "Hallo $name",
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis,
-                color = AppTheme.colors.primary,
-                style = AppTheme.typography.h1,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-            )
+    //Store the capture image
+    private fun getDirectory(): File {
+        val mediaDir = externalMediaDirs.firstOrNull()?.let {
+            File(it, resources.getString(R.string.app_name)).apply { mkdirs() }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    AppTheme {
-        Greeting("Android")
+        return if (mediaDir != null && mediaDir.exists())
+            mediaDir else filesDir
     }
 }

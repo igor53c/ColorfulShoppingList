@@ -17,8 +17,6 @@ import com.ipcoding.colorfulshoppinglist.ui.theme.AppTheme
 
 @Composable
 fun TopRow(
-    color: Color,
-    onColorClick: () -> Unit,
     onIconClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -28,6 +26,7 @@ fun TopRow(
         horizontalArrangement = Arrangement.Center
     ) {
         PicturePart(modifier = Modifier.weight(1f))
+
         Column(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -43,21 +42,6 @@ fun TopRow(
                     tint = AppTheme.colors.primary,
                     modifier = Modifier
                         .size(AppTheme.dimensions.spaceLarge)
-                )
-            }
-            Box(
-                modifier = Modifier
-                    .padding(AppTheme.dimensions.spaceExtraMedium),
-                contentAlignment = Alignment.Center
-            ) {
-                Box(
-                    modifier = Modifier
-                        .size(AppTheme.dimensions.spaceLarge)
-                        .background(
-                            color = color,
-                            shape = AppTheme.customShapes.roundedCornerShape
-                        )
-                        .clickable(onClick = onColorClick)
                 )
             }
         }

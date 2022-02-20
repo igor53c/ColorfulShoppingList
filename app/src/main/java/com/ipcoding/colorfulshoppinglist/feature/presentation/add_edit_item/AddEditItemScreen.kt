@@ -4,11 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.ipcoding.colorfulshoppinglist.core.util.TestTags
@@ -20,14 +16,10 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun AddEditItemScreen(
     navController: NavController,
-    itemColor: Int,
     viewModel: AddEditItemViewModel = hiltViewModel()
 ) {
     val titleState = viewModel.itemTitle.value
     val scaffoldState = rememberScaffoldState()
-    val color = remember {
-        mutableStateOf(Color(if (itemColor != -1) itemColor else viewModel.itemColor.value))
-    }
 
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
@@ -54,11 +46,6 @@ fun AddEditItemScreen(
         ) {
 
             TopRow(
-                color = color.value,
-                onColorClick = {
-                    color.value = viewModel.changeColor(color.value)
-                    viewModel.onEvent(AddEditItemEvent.ChangeColor(color.value.toArgb()))
-                },
                 onIconClick = { viewModel.onEvent(AddEditItemEvent.SaveItem) }
             )
             Divider(

@@ -5,6 +5,5 @@ data class ItemUseCases(
     val deleteItem: DeleteItem,
     val changeColorItem: ChangeColorItem,
     val addItem: AddItem,
-    val getItem: GetItem,
-    val changeColor: ChangeColor
+    val getItem: GetItem
 )

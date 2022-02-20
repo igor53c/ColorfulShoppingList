@@ -40,8 +40,7 @@ object AppModule {
             deleteItem = DeleteItem(repository),
             changeColorItem = ChangeColorItem(repository),
             addItem = AddItem(repository),
-            getItem = GetItem(repository),
-            changeColor = ChangeColor()
+            getItem = GetItem(repository)
         )
     }
 }

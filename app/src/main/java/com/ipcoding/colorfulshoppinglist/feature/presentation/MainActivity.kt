@@ -38,28 +38,17 @@ class MainActivity : ComponentActivity() {
                             BackHandler(true) {}
                         }
                         composable(
-                            route = Screen.AddEditItemScreen.route +
-                                    "?itemId={itemId}&itemColor={itemColor}",
+                            route = Screen.AddEditItemScreen.route + "?itemId={itemId}",
                             arguments = listOf(
                                 navArgument(
                                     name = "itemId"
                                 ) {
                                     type = NavType.IntType
                                     defaultValue = -1
-                                },
-                                navArgument(
-                                    name = "itemColor"
-                                ) {
-                                    type = NavType.IntType
-                                    defaultValue = -1
-                                },
+                                }
                             )
                         ) {
-                            val color = it.arguments?.getInt("itemColor") ?: -1
-                            AddEditItemScreen(
-                                navController = navController,
-                                itemColor = color
-                            )
+                            AddEditItemScreen(navController = navController)
                         }
                         composable(route = Screen.CameraOpenScreen.route) {
                             CameraOpenScreen(getDirectory())

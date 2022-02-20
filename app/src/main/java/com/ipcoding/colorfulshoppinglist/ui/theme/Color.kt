@@ -4,14 +4,14 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
 val Green = Color(0xFF4CAF50)
-val RedPink = Color(0xFFE91E63)
+val RedPink100 = Color(0xFFCA0045)
 
 object Colors {
-    val RedPink = Color(0xFFE91E63)
+    val RedPink = RedPink100
 }
 
 fun lightAppColors(
-    primary: Color = RedPink,
+    primary: Color = RedPink100,
     primaryVariant: Color = Color(0xFF3700B3),
     secondary: Color = Color(0xFF03DAC6),
     secondaryVariant: Color = Green,
@@ -40,7 +40,7 @@ fun lightAppColors(
 )
 
 fun darkAppColors(
-    primary: Color = RedPink,
+    primary: Color = RedPink100,
     primaryVariant: Color = Color(0xFF3700B3),
     secondary: Color = Color(0xFF03DAC6),
     secondaryVariant: Color = Green,

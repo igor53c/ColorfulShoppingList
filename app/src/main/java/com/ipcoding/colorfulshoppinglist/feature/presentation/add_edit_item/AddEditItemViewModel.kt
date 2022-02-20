@@ -97,8 +97,4 @@ class AddEditItemViewModel @Inject constructor(
         data class ShowSnackBar(val message: String): UiEvent()
         object SaveItem: UiEvent()
     }
-
-    fun changeColor(color: Color) : Color {
-        return itemUseCases.changeColor(color)
-    }
 }

@@ -58,8 +58,7 @@ fun ItemRow(
                     }
                 },
                 onEditClick = {
-                    navController.navigate(
-                        Screen.AddEditItemScreen.route +
+                    navController.navigate(Screen.AddEditItemScreen.route +
                                 "?itemId=${item1.id}&itemColor=${item1.color}"
                     )
                 }

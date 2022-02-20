@@ -1,16 +1,16 @@
-package com.ipcoding.einkaufsliste.feature_item.data.repository
+package com.ipcoding.colorfulshoppinglist.feature.data.repository
 
-import com.ipcoding.einkaufsliste.feature_item.data.data_source.ItemDao
-import com.ipcoding.einkaufsliste.feature_item.domain.model.Item
-import com.ipcoding.einkaufsliste.feature_item.domain.repository.ItemRepository
+import com.ipcoding.colorfulshoppinglist.feature.data.data_source.ItemDao
+import com.ipcoding.colorfulshoppinglist.feature.domain.model.Item
+import com.ipcoding.colorfulshoppinglist.feature.domain.repository.ItemRepository
 import kotlinx.coroutines.flow.Flow
 
 class ItemRepositoryImpl(
     private val dao: ItemDao
 ): ItemRepository {
 
-    override fun getItems(): Flow<List<Item>> {
-        return dao.getItems()
+    override fun getItemsFlow(): Flow<List<Item>> {
+        return dao.getItemsFlow()
     }
 
     override suspend fun getItemById(id: Int?): Item? {

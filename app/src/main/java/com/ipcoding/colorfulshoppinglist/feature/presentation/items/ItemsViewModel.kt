@@ -4,10 +4,10 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ipcoding.einkaufsliste.feature_item.domain.model.Item
-import com.ipcoding.einkaufsliste.feature_item.domain.use_case.ItemUseCases
-import com.ipcoding.einkaufsliste.feature_item.domain.util.ItemOrder
-import com.ipcoding.einkaufsliste.feature_item.domain.util.OrderType
+import com.ipcoding.colorfulshoppinglist.feature.domain.model.Item
+import com.ipcoding.colorfulshoppinglist.feature.domain.use_case.ItemUseCases
+import com.ipcoding.colorfulshoppinglist.feature.domain.util.ItemOrder
+import com.ipcoding.colorfulshoppinglist.feature.domain.util.OrderType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
@@ -56,6 +56,10 @@ class ItemsViewModel @Inject constructor(
                 viewModelScope.launch {
                     itemUseCases.changeColorItem(event.item)
                 }
+                val list = mutableListOf<Item>()
+                list.addAll(state.value.items)
+                list.remove(event.item)
+                _state.value.items = list
             }
             is ItemsEvent.RestoreItem -> {
                 viewModelScope.launch {

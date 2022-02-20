@@ -1,7 +1,7 @@
 package com.ipcoding.colorfulshoppinglist.feature.presentation.items
 
-import com.ipcoding.einkaufsliste.feature_item.domain.model.Item
-import com.ipcoding.einkaufsliste.feature_item.domain.util.ItemOrder
+import com.ipcoding.colorfulshoppinglist.feature.domain.model.Item
+import com.ipcoding.colorfulshoppinglist.feature.domain.util.ItemOrder
 
 sealed class ItemsEvent {
     data class Order(val itemOrder: ItemOrder): ItemsEvent()

@@ -1,4 +1,4 @@
-package com.ipcoding.einkaufsliste.feature_item.domain.util
+package com.ipcoding.colorfulshoppinglist.feature.domain.util
 
 sealed class OrderType {
 

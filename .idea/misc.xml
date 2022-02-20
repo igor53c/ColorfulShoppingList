@@ -6,6 +6,8 @@
         <entry key="app/src/main/res/drawable-v24/ic_outline_flashlight_off.xml" value="0.1415" />
         <entry key="app/src/main/res/drawable-v24/ic_outline_flashlight_on.xml" value="0.1415" />
         <entry key="app/src/main/res/drawable-v24/ic_outline_rotate.xml" value="0.1415" />
+        <entry key="app/src/main/res/drawable/ic_image.xml" value="0.1945" />
+        <entry key="app/src/main/res/drawable/ic_image_.xml" value="0.1945" />
       </map>
     </option>
   </component>

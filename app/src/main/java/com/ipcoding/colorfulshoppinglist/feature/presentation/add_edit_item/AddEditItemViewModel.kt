@@ -2,13 +2,14 @@ package com.ipcoding.colorfulshoppinglist.feature.presentation.add_edit_item
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ipcoding.einkaufsliste.feature_item.domain.model.InvalidItemExeption
-import com.ipcoding.einkaufsliste.feature_item.domain.model.Item
-import com.ipcoding.einkaufsliste.feature_item.domain.use_case.ItemUseCases
+import com.ipcoding.colorfulshoppinglist.feature.domain.model.InvalidItemException
+import com.ipcoding.colorfulshoppinglist.feature.domain.model.Item
+import com.ipcoding.colorfulshoppinglist.feature.domain.use_case.ItemUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -28,7 +29,7 @@ class AddEditItemViewModel @Inject constructor(
     )
     val itemTitle: State<ItemTextFieldState> = _itemTitle
 
-    private val _itemColor = mutableStateOf(Item.itemColors.random().toArgb())
+    private val _itemColor = mutableStateOf(Color.Transparent.toArgb())
     val itemColor: State<Int> = _itemColor
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
@@ -80,9 +81,9 @@ class AddEditItemViewModel @Inject constructor(
                             )
                         )
                         _eventFlow.emit(UiEvent.SaveItem)
-                    } catch(e: InvalidItemExeption) {
+                    } catch(e: InvalidItemException) {
                         _eventFlow.emit(
-                            UiEvent.ShowSnackbar(
+                            UiEvent.ShowSnackBar(
                                 message = e.message ?: "Couldn't save item"
                             )
                         )
@@ -93,8 +94,11 @@ class AddEditItemViewModel @Inject constructor(
     }
 
     sealed class UiEvent {
-        data class ShowSnackbar(val message: String): UiEvent()
+        data class ShowSnackBar(val message: String): UiEvent()
         object SaveItem: UiEvent()
     }
 
+    fun changeColor(color: Color) : Color {
+        return itemUseCases.changeColor(color)
+    }
 }

@@ -1,7 +1,7 @@
-package com.ipcoding.einkaufsliste.feature_item.domain.use_case
+package com.ipcoding.colorfulshoppinglist.feature.domain.use_case
 
-import com.ipcoding.einkaufsliste.feature_item.domain.model.Item
-import com.ipcoding.einkaufsliste.feature_item.domain.repository.ItemRepository
+import com.ipcoding.colorfulshoppinglist.feature.domain.model.Item
+import com.ipcoding.colorfulshoppinglist.feature.domain.repository.ItemRepository
 
 class GetItem (
     private val repository: ItemRepository

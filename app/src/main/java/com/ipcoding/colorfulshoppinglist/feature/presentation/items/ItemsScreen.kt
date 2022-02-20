@@ -1,27 +1,24 @@
 package com.ipcoding.colorfulshoppinglist.feature.presentation.items
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material.icons.filled.SortByAlpha
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.ipcoding.colorfulshoppinglist.R
+import com.ipcoding.colorfulshoppinglist.feature.domain.util.ItemOrder
+import com.ipcoding.colorfulshoppinglist.feature.presentation.items.components.ItemRow
 import com.ipcoding.colorfulshoppinglist.feature.presentation.util.Screen
 import com.ipcoding.colorfulshoppinglist.ui.theme.AppTheme
-import com.ipcoding.einkaufsliste.feature_item.domain.util.ItemOrder
-import com.ipcoding.einkaufsliste.feature_item.presentation.items.components.OneItem
-import kotlinx.coroutines.launch
-
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -31,10 +28,10 @@ fun ItemsScreen(
 ) {
     val state = viewModel.state.value
     val scaffoldState = rememberScaffoldState()
-    val scope = rememberCoroutineScope()
 
     Scaffold(
-        scaffoldState = scaffoldState
+        scaffoldState = scaffoldState,
+        backgroundColor = AppTheme.colors.background
     ) {
         Column(
             modifier = Modifier
@@ -55,9 +52,10 @@ fun ItemsScreen(
                 ) {
                     Icon(
                         imageVector = Icons.Default.SortByAlpha,
-                        contentDescription = "Sort by alpha",
+                        contentDescription = stringResource(id = R.string.sort_by_alpha),
                         modifier = Modifier
-                            .size(AppTheme.dimensions.spaceLarge)
+                            .size(AppTheme.dimensions.spaceLarge),
+                        tint = AppTheme.colors.primary
                     )
                 }
                 IconButton(
@@ -69,9 +67,10 @@ fun ItemsScreen(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Sort,
-                        contentDescription = "Sort",
+                        contentDescription = stringResource(id = R.string.sort_by_color),
                         modifier = Modifier
-                            .size(AppTheme.dimensions.spaceLarge)
+                            .size(AppTheme.dimensions.spaceLarge),
+                        tint = AppTheme.colors.primary
                     )
                 }
                 IconButton(
@@ -81,45 +80,32 @@ fun ItemsScreen(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Add,
-                        contentDescription = "Add",
+                        contentDescription = stringResource(id = R.string.add_item),
                         modifier = Modifier
-                            .size(AppTheme.dimensions.spaceLarge)
+                            .size(AppTheme.dimensions.spaceLarge),
+                        tint = AppTheme.colors.primary
                     )
                 }
             }
-            Spacer(modifier = Modifier.height(AppTheme.dimensions.spaceLarge))
+            Spacer(modifier = Modifier.height(AppTheme.dimensions.spaceSmall))
             LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(state.items) { item ->
-                    OneItem(
-                        item = item,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .combinedClickable (
-                                onLongClick = {
-                                    navController.navigate(
-                                        Screen.AddEditItemScreen.route +
-                                                "?itemId=${item.id}&itemColor=${item.color}"
-                                    )
-                                },
-                                onClick = {
-                                    viewModel.onEvent(ItemsEvent.UpdateItem(item))
-                                }
-                            )
-                            ,
-                        onDeleteClick = {
-                            viewModel.onEvent(ItemsEvent.DeleteItem(item))
-                            scope.launch {
-                                val result = scaffoldState.snackbarHostState.showSnackbar(
-                                    message = "Item deleted",
-                                    actionLabel = "Undo"
-                                )
-                                if(result == SnackbarResult.ActionPerformed) {
-                                    viewModel.onEvent(ItemsEvent.RestoreItem)
-                                }
-                            }
-                        }
-                    )
-                    Spacer(modifier = Modifier.height(AppTheme.dimensions.spaceSmall))
+
+                if(state.items.isNotEmpty()) {
+                    val itemCount = if (state.items.size % 2 == 0) {
+                        state.items.size / 2
+                    } else {
+                        state.items.size / 2 + 1
+                    }
+                    items(itemCount) { rowIndex ->
+                        ItemRow(
+                            rowIndex = rowIndex,
+                            items = state.items,
+                            navController = navController,
+                            viewModel = viewModel,
+                            scaffoldState = scaffoldState
+                        )
+                        Spacer(modifier = Modifier.height(AppTheme.dimensions.spaceSmall))
+                    }
                 }
             }
         }

@@ -5,34 +5,9 @@ import androidx.compose.ui.graphics.Color
 
 val Green = Color(0xFF4CAF50)
 val RedPink = Color(0xFFE91E63)
-val Orange = Color(0xFFFF9800)
-val Navy = Color(0xFF000080)
-val Purple = Color(0xFF6200EE)
 
 object Colors {
-    val LightGreen10 = Color(0xFFC2FDC2)
-    val LightGreen20 = Color(0xFFACFAAC)
-    val LightBlue = Color(0xFFC5C5FF)
-    val LightYellow = Color(0xFFF3F3BD)
-    val LightRed10 = Color(0xFFFDC8C8)
-    val LightRed20 = Color(0xFFF7A8A8)
-    val LightGray10 = Color(0xFFE2E2E2)
-    val AllColors = listOf(
-        Color.Black, Color.LightGray, Color.Green,
-        Color.Cyan, Color.Blue, Navy, Purple, Color.Magenta,
-        Color.Red, Orange, Color.Yellow, Color.White
-    )
-
-    fun colorToIndex(color: Color): Int {
-        return AllColors.indexOf(color)
-    }
-
-    fun indexToColor(index: Int): Color {
-        return when (index) {
-            in AllColors.indices -> AllColors[index]
-            else -> Color.Transparent
-        }
-    }
+    val RedPink = Color(0xFFE91E63)
 }
 
 fun lightAppColors(

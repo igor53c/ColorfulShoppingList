@@ -2,10 +2,10 @@ package com.ipcoding.colorfulshoppinglist.di
 
 import android.app.Application
 import androidx.room.Room
-import com.ipcoding.einkaufsliste.feature_item.data.data_source.ItemDatabase
-import com.ipcoding.einkaufsliste.feature_item.data.repository.ItemRepositoryImpl
-import com.ipcoding.einkaufsliste.feature_item.domain.repository.ItemRepository
-import com.ipcoding.einkaufsliste.feature_item.domain.use_case.*
+import com.ipcoding.colorfulshoppinglist.feature.data.data_source.ItemDatabase
+import com.ipcoding.colorfulshoppinglist.feature.data.repository.ItemRepositoryImpl
+import com.ipcoding.colorfulshoppinglist.feature.domain.repository.ItemRepository
+import com.ipcoding.colorfulshoppinglist.feature.domain.use_case.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -40,7 +40,8 @@ object AppModule {
             deleteItem = DeleteItem(repository),
             changeColorItem = ChangeColorItem(repository),
             addItem = AddItem(repository),
-            getItem = GetItem(repository)
+            getItem = GetItem(repository),
+            changeColor = ChangeColor()
         )
     }
 }

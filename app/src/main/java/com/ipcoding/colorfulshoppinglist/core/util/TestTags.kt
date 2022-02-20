@@ -1,4 +1,4 @@
-package com.ipcoding.einkaufsliste.core.util
+package com.ipcoding.colorfulshoppinglist.core.util
 
 object TestTags {
 

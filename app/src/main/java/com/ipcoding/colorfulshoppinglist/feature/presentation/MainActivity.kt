@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             AppTheme {
                 Surface(
-                    color = AppTheme.colors.background
+                   color = AppTheme.colors.background
                 ) {
                     val navController = rememberNavController()
                     NavHost(

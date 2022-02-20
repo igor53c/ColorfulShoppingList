@@ -1,10 +1,10 @@
 package com.ipcoding.colorfulshoppinglist.feature.presentation.items
 
-import com.ipcoding.einkaufsliste.feature_item.domain.model.Item
-import com.ipcoding.einkaufsliste.feature_item.domain.util.ItemOrder
-import com.ipcoding.einkaufsliste.feature_item.domain.util.OrderType
+import com.ipcoding.colorfulshoppinglist.feature.domain.model.Item
+import com.ipcoding.colorfulshoppinglist.feature.domain.util.ItemOrder
+import com.ipcoding.colorfulshoppinglist.feature.domain.util.OrderType
 
 data class ItemsState(
-    val items: List<Item> = emptyList(),
+    var items: List<Item> = emptyList(),
     val itemOrder: ItemOrder = ItemOrder.Color(OrderType.Ascending)
 )

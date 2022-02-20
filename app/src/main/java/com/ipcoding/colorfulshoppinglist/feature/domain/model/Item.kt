@@ -1,6 +1,5 @@
-package com.ipcoding.einkaufsliste.feature_item.domain.model
+package com.ipcoding.colorfulshoppinglist.feature.domain.model
 
-import androidx.compose.ui.graphics.Color
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -9,10 +8,6 @@ data class Item(
     val title: String,
     var color: Int,
     @PrimaryKey val id: Int? = null
-) {
-    companion object {
-        val itemColors = listOf(Color.Red, Color.Green)
-    }
-}
+)
 
-class InvalidItemExeption(message: String): Exception(message)
+class InvalidItemException(message: String): Exception(message)

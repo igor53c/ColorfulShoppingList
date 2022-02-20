@@ -1,9 +1,9 @@
-package com.ipcoding.einkaufsliste.feature_item.domain.use_case
+package com.ipcoding.colorfulshoppinglist.feature.domain.use_case
 
-import com.ipcoding.einkaufsliste.feature_item.domain.model.Item
-import com.ipcoding.einkaufsliste.feature_item.domain.repository.ItemRepository
-import com.ipcoding.einkaufsliste.feature_item.domain.util.ItemOrder
-import com.ipcoding.einkaufsliste.feature_item.domain.util.OrderType
+import com.ipcoding.colorfulshoppinglist.feature.domain.model.Item
+import com.ipcoding.colorfulshoppinglist.feature.domain.repository.ItemRepository
+import com.ipcoding.colorfulshoppinglist.feature.domain.util.ItemOrder
+import com.ipcoding.colorfulshoppinglist.feature.domain.util.OrderType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -14,7 +14,7 @@ class GetItems(
     operator fun invoke(
         itemOrder: ItemOrder = ItemOrder.Color(OrderType.Ascending)
     ): Flow<List<Item>> {
-        return repository.getItems().map { items ->
+        return repository.getItemsFlow().map { items ->
             when (itemOrder.orderType) {
                 is OrderType.Ascending -> {
                     when (itemOrder) {

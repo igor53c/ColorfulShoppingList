@@ -58,7 +58,7 @@ fun IconsRow(
         IconButton(
             onClick = {
                 viewModel.onEvent(
-                    ItemsEvent.Order(ItemOrder.Color(state.itemOrder.orderType))
+                    ItemsEvent.Order(ItemOrder.IsMarked(state.itemOrder.orderType))
                 )
             },
         ) {

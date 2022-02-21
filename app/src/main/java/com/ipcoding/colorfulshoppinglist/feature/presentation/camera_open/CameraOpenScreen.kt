@@ -1,6 +1,5 @@
 package com.ipcoding.colorfulshoppinglist.feature.presentation.camera_open
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
@@ -13,8 +12,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,10 +23,12 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.ipcoding.colorfulshoppinglist.R
 import androidx.lifecycle.LifecycleOwner
+import androidx.navigation.NavController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.rememberPermissionState
+import com.ipcoding.colorfulshoppinglist.feature.presentation.util.Screen
 import com.ipcoding.colorfulshoppinglist.ui.theme.AppTheme
 import java.io.File
 import java.text.SimpleDateFormat
@@ -37,47 +36,30 @@ import java.util.*
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun CameraOpenScreen(directory: File) {
-
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Spacer(modifier = Modifier.height(AppTheme.dimensions.spaceSmall))
-
-        val cameraPermissionState =
-            rememberPermissionState(permission = Manifest.permission.CAMERA)
-
-        Button(
-            onClick = {
-                cameraPermissionState.launchPermissionRequest()
-            }
-        ) {
-            Text(text = "Permission")
-        }
-
-        Spacer(modifier = Modifier.height(AppTheme.dimensions.spaceExtraMedium))
-
-        CameraOpen(directory)
-    }
-}
-
-@Composable
-fun CameraOpen(directory: File) {
-
+fun CameraOpenScreen(
+    navController: NavController,
+    directory: File,
+    viewModel: CameraOpenViewModel = hiltViewModel()
+) {
 
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
     SimpleCameraPreview(
+        navController = navController,
         context = context,
         lifecycleOwner = lifecycleOwner,
         outputDirectory = directory,
-        onMediaCaptured = { url -> }
+        onMediaCaptured = { uri ->
+            viewModel.saveCurrentUrl(uri?.path)
+            navController.navigate(Screen.AddEditItemScreen.route)
+        }
     )
 }
 
 @Composable
 fun SimpleCameraPreview(
+    navController: NavController,
     context: Context,
     lifecycleOwner: LifecycleOwner,
     outputDirectory: File,
@@ -130,26 +112,6 @@ fun SimpleCameraPreview(
         )
 
         Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(AppTheme.dimensions.spaceMedium)
-                .align(Alignment.TopStart)
-        ) {
-            IconButton(
-                onClick = {
-                    Toast.makeText(context, "Back Clicked", Toast.LENGTH_SHORT).show()
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = "back arrow",
-                    tint = AppTheme.colors.surface
-                )
-            }
-        }
-
-        Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
@@ -158,7 +120,8 @@ fun SimpleCameraPreview(
                 .clip(AppTheme.customShapes.roundedCornerShape)
                 .background(
                     color = AppTheme.colors.primary,
-                    shape = AppTheme.customShapes.roundedCornerShape)
+                    shape = AppTheme.customShapes.roundedCornerShape
+                )
                 .padding(AppTheme.dimensions.spaceSmall)
                 .align(Alignment.BottomCenter)
         ) {

@@ -12,20 +12,20 @@ class GetItems(
 ) {
 
     operator fun invoke(
-        itemOrder: ItemOrder = ItemOrder.Color(OrderType.Ascending)
+        itemOrder: ItemOrder = ItemOrder.IsMarked(OrderType.Ascending)
     ): Flow<List<Item>> {
         return repository.getItemsFlow().map { items ->
             when (itemOrder.orderType) {
                 is OrderType.Ascending -> {
                     when (itemOrder) {
                         is ItemOrder.Title -> items.sortedBy { it.title.lowercase() }
-                        is ItemOrder.Color -> items.sortedBy { it.color }
+                        is ItemOrder.IsMarked -> items.sortedBy { it.isMarked }
                     }
                 }
                 is OrderType.Descending -> {
                     when (itemOrder) {
                         is ItemOrder.Title -> items.sortedByDescending { it.title.lowercase() }
-                        is ItemOrder.Color -> items.sortedByDescending { it.color }
+                        is ItemOrder.IsMarked -> items.sortedByDescending { it.isMarked }
                     }
                 }
             }

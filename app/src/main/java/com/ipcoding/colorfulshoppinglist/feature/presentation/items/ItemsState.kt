@@ -6,5 +6,5 @@ import com.ipcoding.colorfulshoppinglist.feature.domain.util.OrderType
 
 data class ItemsState(
     var items: List<Item> = emptyList(),
-    val itemOrder: ItemOrder = ItemOrder.Color(OrderType.Ascending)
+    val itemOrder: ItemOrder = ItemOrder.IsMarked(OrderType.Ascending)
 )

@@ -6,7 +6,8 @@ import androidx.room.PrimaryKey
 @Entity
 data class Item(
     val title: String,
-    var color: Int,
+    var isMarked : Boolean = false,
+    var url : String?,
     @PrimaryKey val id: Int? = null
 )
 

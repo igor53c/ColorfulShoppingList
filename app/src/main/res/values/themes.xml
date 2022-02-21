@@ -2,10 +2,10 @@
 <resources>
 
     <style name="Theme.ColorfulShoppingList" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/red_pink</item>
-        <item name="android:windowBackground">@color/red_pink</item>
+        <item name="android:statusBarColor">@color/blue</item>
+        <item name="android:windowBackground">@color/blue</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:backgroundDimEnabled">false</item>
-        <item name="android:navigationBarColor">@color/red_pink</item>
+        <item name="android:navigationBarColor">@color/blue</item>
     </style>
 </resources>

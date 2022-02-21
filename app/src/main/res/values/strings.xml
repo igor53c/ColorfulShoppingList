@@ -11,4 +11,7 @@
     <string name="save">Save</string>
     <string name="icon_image">Icon image</string>
     <string name="icon_menu">Icon menu</string>
+    <string name="icon_camera">Icon camera</string>
+    <string name="upload_picture">Upload picture</string>
+    <string name="cancel">Cancel</string>
 </resources>

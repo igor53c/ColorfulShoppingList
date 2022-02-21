@@ -59,7 +59,7 @@ fun ItemRow(
                 },
                 onEditClick = {
                     navController.navigate(Screen.AddEditItemScreen.route +
-                                "?itemId=${item1.id}&itemColor=${item1.color}"
+                                "?itemId=${item1.id}"
                     )
                 }
             )
@@ -88,7 +88,7 @@ fun ItemRow(
                     onEditClick = {
                         navController.navigate(
                             Screen.AddEditItemScreen.route +
-                                    "?itemId=${item2.id}&itemColor=${item2.color}"
+                                    "?itemId=${item2.id}"
                         )
                     }
                 )

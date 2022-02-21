@@ -3,15 +3,15 @@ package com.ipcoding.colorfulshoppinglist.ui.theme
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
-val Green = Color(0xFF4CAF50)
-val RedPink100 = Color(0xFFCA0045)
+val Green = Color(0xFF00CCFF)
+val Blue100 = Color(0xFF00A8EA)
 
 object Colors {
-    val RedPink = RedPink100
+    val Blue = Blue100
 }
 
 fun lightAppColors(
-    primary: Color = RedPink100,
+    primary: Color = Blue100,
     primaryVariant: Color = Color(0xFF3700B3),
     secondary: Color = Color(0xFF03DAC6),
     secondaryVariant: Color = Green,
@@ -40,7 +40,7 @@ fun lightAppColors(
 )
 
 fun darkAppColors(
-    primary: Color = RedPink100,
+    primary: Color = Blue100,
     primaryVariant: Color = Color(0xFF3700B3),
     secondary: Color = Color(0xFF03DAC6),
     secondaryVariant: Color = Green,

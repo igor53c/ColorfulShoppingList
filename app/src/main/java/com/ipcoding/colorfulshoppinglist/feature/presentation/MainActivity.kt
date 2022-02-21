@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.ipcoding.colorfulshoppinglist.R
 import com.ipcoding.colorfulshoppinglist.feature.presentation.util.Screen
 import com.ipcoding.colorfulshoppinglist.ui.theme.AppTheme
@@ -21,6 +22,7 @@ import java.io.File
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalPermissionsApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -38,7 +40,8 @@ class MainActivity : ComponentActivity() {
                             BackHandler(true) {}
                         }
                         composable(
-                            route = Screen.AddEditItemScreen.route + "?itemId={itemId}",
+                            route = Screen.AddEditItemScreen.route +
+                                    "?itemId={itemId}",
                             arguments = listOf(
                                 navArgument(
                                     name = "itemId"
@@ -49,10 +52,16 @@ class MainActivity : ComponentActivity() {
                             )
                         ) {
                             AddEditItemScreen(navController = navController)
+                            BackHandler(true) {
+                                navController.navigate(Screen.ItemsScreen.route)
+                            }
                         }
                         composable(route = Screen.CameraOpenScreen.route) {
-                            CameraOpenScreen(getDirectory())
-                            BackHandler(true) {}
+                            CameraOpenScreen(
+                                navController = navController,
+                                directory = getDirectory()
+                            )
+                            BackHandler(true) { navController.navigateUp() }
                         }
                     }
                 }

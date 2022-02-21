@@ -2,11 +2,10 @@ package com.ipcoding.colorfulshoppinglist.feature.presentation.add_edit_item
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ipcoding.colorfulshoppinglist.core.domain.preferences.Preferences
 import com.ipcoding.colorfulshoppinglist.feature.domain.model.InvalidItemException
 import com.ipcoding.colorfulshoppinglist.feature.domain.model.Item
 import com.ipcoding.colorfulshoppinglist.feature.domain.use_case.ItemUseCases
@@ -19,37 +18,42 @@ import javax.inject.Inject
 @HiltViewModel
 class AddEditItemViewModel @Inject constructor(
     private val itemUseCases: ItemUseCases,
+    private val preferences: Preferences,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val _itemTitle = mutableStateOf(
-        ItemTextFieldState(
-        hint = "Enter item..."
-    )
-    )
+    private val _itemTitle = mutableStateOf(ItemTextFieldState(hint = "Enter item..."))
     val itemTitle: State<ItemTextFieldState> = _itemTitle
-
-    private val _itemColor = mutableStateOf(Color.Transparent.toArgb())
-    val itemColor: State<Int> = _itemColor
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
-    private var currentItemId: Int? = null
+    private val _currentUrl = mutableStateOf<String?>(null)
+    val currentUrl: State<String?> = _currentUrl
 
     init {
         savedStateHandle.get<Int>("itemId")?.let { itemId ->
             if(itemId != -1) {
                 viewModelScope.launch {
                     itemUseCases.getItem(itemId)?.also { item ->
-                        currentItemId = item.id
+                        item.id?.let { preferences.saveCurrentId(it) }
                         _itemTitle.value = itemTitle.value.copy(
                             text = item.title,
                             isHintVisible = false
                         )
-                        _itemColor.value = item.color
+                        _currentUrl.value = item.url
+                        preferences.saveCurrentUrl(item.url)
+                        preferences.saveCurrentText(item.title)
                     }
                 }
+            } else {
+                preferences.loadCurrentText()?.let {
+                    _itemTitle.value = itemTitle.value.copy(
+                        text = it,
+                        isHintVisible = false
+                    )
+                }
+                _currentUrl.value = preferences.loadCurrentUrl()
             }
         }
     }
@@ -60,6 +64,7 @@ class AddEditItemViewModel @Inject constructor(
                 _itemTitle.value = itemTitle.value.copy(
                     text = event.value
                 )
+                preferences.saveCurrentText(event.value)
             }
             is AddEditItemEvent.ChangeTitleFocus -> {
                 _itemTitle.value = itemTitle.value.copy(
@@ -67,8 +72,8 @@ class AddEditItemViewModel @Inject constructor(
                             itemTitle.value.text.isBlank()
                 )
             }
-            is AddEditItemEvent.ChangeColor -> {
-                _itemColor.value = event.color
+            is AddEditItemEvent.ChangedImage -> {
+                preferences.saveCurrentUrl(event.url)
             }
             is AddEditItemEvent.SaveItem -> {
                 viewModelScope.launch {
@@ -76,8 +81,9 @@ class AddEditItemViewModel @Inject constructor(
                         itemUseCases.addItem(
                             Item(
                                 title = itemTitle.value.text,
-                                color = itemColor.value,
-                                id = currentItemId
+                                url = preferences.loadCurrentUrl(),
+                                id = if(preferences.loadCurrentId() == -1) null else
+                                        preferences.loadCurrentId(),
                             )
                         )
                         _eventFlow.emit(UiEvent.SaveItem)

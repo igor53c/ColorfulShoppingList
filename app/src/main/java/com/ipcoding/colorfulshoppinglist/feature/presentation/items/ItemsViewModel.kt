@@ -4,6 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ipcoding.colorfulshoppinglist.core.domain.preferences.Preferences
 import com.ipcoding.colorfulshoppinglist.feature.domain.model.Item
 import com.ipcoding.colorfulshoppinglist.feature.domain.use_case.ItemUseCases
 import com.ipcoding.colorfulshoppinglist.feature.domain.util.ItemOrder
@@ -17,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ItemsViewModel @Inject constructor(
-    private val itemUseCases: ItemUseCases
+    private val itemUseCases: ItemUseCases,
+    private val preferences: Preferences
 ) : ViewModel() {
 
     private val _state = mutableStateOf(ItemsState())
@@ -28,7 +30,14 @@ class ItemsViewModel @Inject constructor(
     private var getItemsJob: Job? = null
 
     init {
-        getItems(ItemOrder.Color(OrderType.Ascending))
+        getItems(ItemOrder.IsMarked(OrderType.Ascending))
+        clearCurrentItem()
+    }
+
+    private fun clearCurrentItem() {
+        preferences.saveCurrentId(-1)
+        preferences.saveCurrentText(null)
+        preferences.saveCurrentUrl(null)
     }
 
     fun onEvent(event: ItemsEvent) {
@@ -54,7 +63,7 @@ class ItemsViewModel @Inject constructor(
             }
             is ItemsEvent.UpdateItem -> {
                 viewModelScope.launch {
-                    itemUseCases.changeColorItem(event.item)
+                    itemUseCases.changeItemIsMarked(event.item)
                 }
                 val list = mutableListOf<Item>()
                 list.addAll(state.value.items)

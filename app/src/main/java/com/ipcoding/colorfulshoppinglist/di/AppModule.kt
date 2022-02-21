@@ -1,7 +1,11 @@
 package com.ipcoding.colorfulshoppinglist.di
 
 import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.room.Room
+import com.ipcoding.colorfulshoppinglist.core.data.preferences.DefaultPreferences
+import com.ipcoding.colorfulshoppinglist.core.domain.preferences.Preferences
 import com.ipcoding.colorfulshoppinglist.feature.data.data_source.ItemDatabase
 import com.ipcoding.colorfulshoppinglist.feature.data.repository.ItemRepositoryImpl
 import com.ipcoding.colorfulshoppinglist.feature.domain.repository.ItemRepository
@@ -34,11 +38,23 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideSharedPreferences(app: Application): SharedPreferences {
+        return app.getSharedPreferences("shared_pref", Context.MODE_PRIVATE)
+    }
+
+    @Provides
+    @Singleton
+    fun providePreferences(sharedPreferences: SharedPreferences): Preferences {
+        return DefaultPreferences(sharedPreferences)
+    }
+
+    @Provides
+    @Singleton
     fun provideUseCases(repository: ItemRepository): ItemUseCases {
         return ItemUseCases(
             getItems = GetItems(repository),
             deleteItem = DeleteItem(repository),
-            changeColorItem = ChangeColorItem(repository),
+            changeItemIsMarked = ChangeItemIsMarked(repository),
             addItem = AddItem(repository),
             getItem = GetItem(repository)
         )

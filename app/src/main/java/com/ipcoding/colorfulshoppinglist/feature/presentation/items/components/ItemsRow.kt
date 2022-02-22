@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ItemRow(
+fun ItemsRow(
     rowIndex: Int,
     items: List<Item>,
     navController: NavController,
@@ -61,7 +61,9 @@ fun ItemRow(
                     )
                 }
             )
+
             Spacer(modifier = Modifier.width(AppTheme.dimensions.spaceMedium))
+
             if(items.size >= rowIndex * 2 + 2) {
                 val item2 = items[rowIndex * 2 + 1]
                 OneItem(

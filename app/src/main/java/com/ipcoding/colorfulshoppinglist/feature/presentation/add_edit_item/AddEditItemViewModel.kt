@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.ipcoding.colorfulshoppinglist.core.domain.preferences.Preferences
 import com.ipcoding.colorfulshoppinglist.feature.domain.model.InvalidItemException
 import com.ipcoding.colorfulshoppinglist.feature.domain.model.Item
-import com.ipcoding.colorfulshoppinglist.feature.domain.resources.ResourceProvider
+import com.ipcoding.colorfulshoppinglist.core.domain.resources.ResourceProvider
 import com.ipcoding.colorfulshoppinglist.feature.domain.use_case.ItemUseCases
 import com.ipcoding.colorfulshoppinglist.R
 import dagger.hilt.android.lifecycle.HiltViewModel

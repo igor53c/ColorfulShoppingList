@@ -11,7 +11,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.ipcoding.colorfulshoppinglist.feature.presentation.items.components.Drawer
 import com.ipcoding.colorfulshoppinglist.feature.presentation.items.components.IconsRow
-import com.ipcoding.colorfulshoppinglist.feature.presentation.items.components.ItemRow
+import com.ipcoding.colorfulshoppinglist.feature.presentation.items.components.ItemsRow
 import com.ipcoding.colorfulshoppinglist.ui.theme.AppTheme
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -57,7 +57,7 @@ fun ItemsScreen(
                         state.items.size / 2 + 1
                     }
                     items(itemCount) { rowIndex ->
-                        ItemRow(
+                        ItemsRow(
                             rowIndex = rowIndex,
                             items = state.items,
                             navController = navController,

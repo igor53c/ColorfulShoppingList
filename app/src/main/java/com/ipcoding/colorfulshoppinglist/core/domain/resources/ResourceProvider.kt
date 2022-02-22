@@ -1,4 +1,4 @@
-package com.ipcoding.colorfulshoppinglist.feature.domain.resources
+package com.ipcoding.colorfulshoppinglist.core.domain.resources
 
 interface ResourceProvider {
 

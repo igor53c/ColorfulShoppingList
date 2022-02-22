@@ -17,4 +17,8 @@
     <string name="could_not_save_item">Could not save item</string>
     <string name="enter_item">Enter item…</string>
     <string name="marking">Marking</string>
+    <string name="item_cant_empty">The Item can not be empty.</string>
+    <string name="flash_icon">Flash icon</string>
+    <string name="camera_switch_icon">Camera switch icon</string>
+    <string name="error_has_occurred">An error has occurred</string>
 </resources>

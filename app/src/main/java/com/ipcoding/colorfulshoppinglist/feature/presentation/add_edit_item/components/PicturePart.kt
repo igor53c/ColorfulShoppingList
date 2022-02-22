@@ -10,7 +10,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -19,9 +18,9 @@ import coil.transform.RoundedCornersTransformation
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberPermissionState
 import com.ipcoding.colorfulshoppinglist.R
+import com.ipcoding.colorfulshoppinglist.core.util.Constants.CROSSFADE_DURATION_MILLIS
 import com.ipcoding.colorfulshoppinglist.feature.presentation.add_edit_item.AddEditItemEvent
 import com.ipcoding.colorfulshoppinglist.feature.presentation.add_edit_item.AddEditItemViewModel
-import com.ipcoding.colorfulshoppinglist.feature.presentation.items.ItemsEvent
 import com.ipcoding.colorfulshoppinglist.feature.presentation.util.Screen
 import com.ipcoding.colorfulshoppinglist.ui.theme.AppTheme
 import java.io.File
@@ -66,7 +65,7 @@ fun PicturePart(
                 data = if(selectedImage.value != null) selectedImage.value else R.drawable.ic_image,
                 builder = {
                     placeholder(R.drawable.ic_image)
-                    crossfade(300)
+                    crossfade(CROSSFADE_DURATION_MILLIS)
                     transformations(
                         RoundedCornersTransformation(AppTheme.dimensions.spaceLarge.value)
                     )

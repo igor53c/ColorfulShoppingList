@@ -10,7 +10,7 @@ import com.ipcoding.colorfulshoppinglist.core.domain.preferences.Preferences
 import com.ipcoding.colorfulshoppinglist.feature.data.data_source.ItemDatabase
 import com.ipcoding.colorfulshoppinglist.feature.data.repository.ItemRepositoryImpl
 import com.ipcoding.colorfulshoppinglist.feature.domain.repository.ItemRepository
-import com.ipcoding.colorfulshoppinglist.feature.domain.resources.ResourceProvider
+import com.ipcoding.colorfulshoppinglist.core.domain.resources.ResourceProvider
 import com.ipcoding.colorfulshoppinglist.feature.domain.use_case.*
 import dagger.Module
 import dagger.Provides
@@ -64,12 +64,15 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideUseCases(repository: ItemRepository): ItemUseCases {
+    fun provideUseCases(
+        repository: ItemRepository,
+        resourceProvider: ResourceProvider
+    ): ItemUseCases {
         return ItemUseCases(
             getItems = GetItems(repository),
             deleteItem = DeleteItem(repository),
             changeItemIsMarked = ChangeItemIsMarked(repository),
-            addItem = AddItem(repository),
+            addItem = AddItem(repository, resourceProvider),
             getItem = GetItem(repository),
             updateItem = UpdateItem(repository)
         )

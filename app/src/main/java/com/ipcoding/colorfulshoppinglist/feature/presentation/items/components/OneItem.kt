@@ -4,9 +4,9 @@ import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -19,12 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import coil.compose.rememberImagePainter
 import coil.transform.RoundedCornersTransformation
-import com.ipcoding.colorfulshoppinglist.core.util.TestTags
 import com.ipcoding.colorfulshoppinglist.feature.domain.model.Item
 import com.ipcoding.colorfulshoppinglist.ui.theme.AppTheme
 import com.ipcoding.colorfulshoppinglist.R
@@ -40,11 +38,9 @@ fun OneItem(
 ) {
     val textColor = remember { mutableStateOf(Colors.Blue)}
     val backgroundColor = remember { mutableStateOf(Color.Transparent)}
-    val image = remember { mutableStateOf<Uri?>(null) }
+    val imageUri = remember { mutableStateOf<Uri?>(null) }
 
-    item.url?.let {
-        image.value = Uri.fromFile(File(it))
-    }
+    item.url?.let { imageUri.value = Uri.fromFile(File(it)) }
 
     if(item.isMarked) {
         backgroundColor.value = Color(Colors.Blue.toArgb())
@@ -55,33 +51,56 @@ fun OneItem(
     }
     BoxWithConstraints(
         modifier = modifier
-            .testTag(TestTags.NOTE_ITEM)
+            .background(
+                color = backgroundColor.value,
+                shape = AppTheme.customShapes.roundedCornerShape
+            )
+            .border(
+                width = AppTheme.dimensions.spaceExtraSmall,
+                color = textColor.value,
+                shape = AppTheme.customShapes.roundedCornerShape
+            )
     ) {
-        val imageHeight = this.maxWidth
+        val size = this.maxWidth - AppTheme.dimensions.spaceLarge
+
+        Icon(
+            imageVector = Icons.Default.EditNote,
+            contentDescription = stringResource(id = R.string.edit_item),
+            tint = textColor.value,
+            modifier = Modifier
+                .padding(AppTheme.dimensions.spaceSmall)
+                .size(AppTheme.dimensions.spaceExtraMedium)
+                .align(alignment = Alignment.TopEnd)
+                .clickable { onEditClick() }
+        )
+
+        Icon(
+            imageVector = Icons.Default.Delete,
+            contentDescription = stringResource(id = R.string.delete_item),
+            tint = textColor.value,
+            modifier = Modifier
+                .padding(AppTheme.dimensions.spaceSmall)
+                .size(AppTheme.dimensions.spaceExtraMedium)
+                .align(alignment = Alignment.BottomEnd)
+                .clickable { onDeleteClick() }
+        )
+
         Column(
             modifier = Modifier
-                .background(
-                    color = backgroundColor.value,
-                    shape = AppTheme.customShapes.roundedCornerShape
-                )
-                .border(
-                    width = AppTheme.dimensions.spaceSuperSmall,
-                    color = textColor.value,
-                    shape = AppTheme.customShapes.roundedCornerShape
+                .padding(
+                    start = AppTheme.dimensions.spaceSmall,
+                    top = AppTheme.dimensions.spaceSmall,
+                    bottom = AppTheme.dimensions.spaceSmall,
                 )
                 .fillMaxSize()
-                .padding(end = AppTheme.dimensions.spaceMedium)
         ) {
-
-            val data = if (image.value != null) image.value else R.drawable.ic_image
 
             Image(
                 contentDescription = stringResource(id = R.string.icon_image),
                 painter = rememberImagePainter(
-                    data = data,
+                    data = if (imageUri.value != null) imageUri.value else R.drawable.ic_image,
                     builder = {
                         placeholder(R.drawable.ic_image)
-                        crossfade(300)
                         transformations(
                             RoundedCornersTransformation(AppTheme.dimensions.spaceLarge.value)
                         )
@@ -89,39 +108,18 @@ fun OneItem(
                 ),
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(imageHeight),
+                    .size(size),
             )
+
+            Spacer(modifier = Modifier.height(AppTheme.dimensions.spaceSmall))
 
             Text(
                 text = item.title,
                 style = AppTheme.typography.h6,
                 color = textColor.value,
-                maxLines = 5,
+                maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.padding(AppTheme.dimensions.spaceMedium)
-            )
-        }
-        IconButton(
-            onClick = onEditClick,
-            modifier = Modifier
-                .align(Alignment.TopEnd)
-        ) {
-            Icon(
-                imageVector = Icons.Default.EditNote,
-                contentDescription = stringResource(id = R.string.edit_item),
-                tint = textColor.value
-            )
-        }
-        IconButton(
-            onClick = onDeleteClick,
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-        ) {
-            Icon(
-                imageVector = Icons.Default.Delete,
-                contentDescription = stringResource(id = R.string.delete_item),
-                tint = textColor.value
+                modifier = Modifier.width(size)
             )
         }
     }

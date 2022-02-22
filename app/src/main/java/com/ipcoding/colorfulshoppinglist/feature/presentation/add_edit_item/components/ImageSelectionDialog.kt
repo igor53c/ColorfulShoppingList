@@ -7,7 +7,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Cancel
-import androidx.compose.material.icons.filled.UploadFile
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,7 +17,7 @@ import com.ipcoding.colorfulshoppinglist.R
 
 @Composable
 fun ImageSelectionDialog (
-    onImageClick: () -> Unit,
+    onDeleteClick: () -> Unit,
     onCameraClick: () -> Unit,
     onCancelClick: () -> Unit
 ) {
@@ -34,11 +34,11 @@ fun ImageSelectionDialog (
             ) {
 
                 IconButton(
-                    onClick = onImageClick,
+                    onClick = onCameraClick,
                 ) {
                     Icon(
-                        imageVector = Icons.Default.UploadFile,
-                        contentDescription = stringResource(id = R.string.upload_picture),
+                        imageVector = Icons.Default.CameraAlt,
+                        contentDescription = stringResource(id = R.string.icon_camera),
                         modifier = Modifier
                             .size(AppTheme.dimensions.spaceExtraLarge)
                             .weight(1f),
@@ -47,11 +47,11 @@ fun ImageSelectionDialog (
                 }
 
                 IconButton(
-                    onClick = onCameraClick,
+                    onClick = onDeleteClick,
                 ) {
                     Icon(
-                        imageVector = Icons.Default.CameraAlt,
-                        contentDescription = stringResource(id = R.string.icon_camera),
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = stringResource(id = R.string.delete_picture),
                         modifier = Modifier
                             .size(AppTheme.dimensions.spaceExtraLarge)
                             .weight(1f),

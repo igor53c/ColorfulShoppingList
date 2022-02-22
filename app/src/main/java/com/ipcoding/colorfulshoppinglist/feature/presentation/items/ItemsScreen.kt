@@ -46,7 +46,7 @@ fun ItemsScreen(
                 scaffoldState = scaffoldState
             )
 
-            Spacer(modifier = Modifier.height(AppTheme.dimensions.spaceSmall))
+            Spacer(modifier = Modifier.height(AppTheme.dimensions.spaceMedium))
 
             LazyColumn(modifier = Modifier.fillMaxSize()) {
 

@@ -42,9 +42,7 @@ fun ItemRow(
                 item = item1,
                 modifier = Modifier
                     .weight(1f)
-                    .clickable {
-                        viewModel.onEvent(ItemsEvent.UpdateItem(item1))
-                               },
+                    .clickable { viewModel.onEvent(ItemsEvent.UpdateItem(item1)) },
                 onDeleteClick = {
                     viewModel.onEvent(ItemsEvent.DeleteItem(item1))
                     scope.launch {
@@ -70,9 +68,7 @@ fun ItemRow(
                     item = item2,
                     modifier = Modifier
                         .weight(1f)
-                        .clickable {
-                            viewModel.onEvent(ItemsEvent.UpdateItem(item2))
-                                   },
+                        .clickable { viewModel.onEvent(ItemsEvent.UpdateItem(item2)) },
                     onDeleteClick = {
                         viewModel.onEvent(ItemsEvent.DeleteItem(item2))
                         scope.launch {

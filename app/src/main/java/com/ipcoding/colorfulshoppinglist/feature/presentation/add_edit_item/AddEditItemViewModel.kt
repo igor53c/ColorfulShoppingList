@@ -8,21 +8,27 @@ import androidx.lifecycle.viewModelScope
 import com.ipcoding.colorfulshoppinglist.core.domain.preferences.Preferences
 import com.ipcoding.colorfulshoppinglist.feature.domain.model.InvalidItemException
 import com.ipcoding.colorfulshoppinglist.feature.domain.model.Item
+import com.ipcoding.colorfulshoppinglist.feature.domain.resources.ResourceProvider
 import com.ipcoding.colorfulshoppinglist.feature.domain.use_case.ItemUseCases
+import com.ipcoding.colorfulshoppinglist.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
 class AddEditItemViewModel @Inject constructor(
     private val itemUseCases: ItemUseCases,
     private val preferences: Preferences,
+    private val resourceProvider: ResourceProvider,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val _itemTitle = mutableStateOf(ItemTextFieldState(hint = "Enter item..."))
+    private val _itemTitle = mutableStateOf(ItemTextFieldState(
+        hint =  resourceProvider.getString(R.string.enter_item)
+    ))
     val itemTitle: State<ItemTextFieldState> = _itemTitle
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
@@ -31,18 +37,33 @@ class AddEditItemViewModel @Inject constructor(
     private val _currentUrl = mutableStateOf<String?>(null)
     val currentUrl: State<String?> = _currentUrl
 
+    private val _currentIsMarked = mutableStateOf(false)
+    val currentIsMarked: State<Boolean> = _currentIsMarked
+
+    private var currentItem: Item? = null
+
     init {
         savedStateHandle.get<Int>("itemId")?.let { itemId ->
             if(itemId != -1) {
                 viewModelScope.launch {
                     itemUseCases.getItem(itemId)?.also { item ->
-                        item.id?.let { preferences.saveCurrentId(it) }
+                        currentItem = item
+                        _currentIsMarked.value = item.isMarked
                         _itemTitle.value = itemTitle.value.copy(
                             text = item.title,
                             isHintVisible = false
                         )
                         _currentUrl.value = item.url
-                        preferences.saveCurrentUrl(item.url)
+                        item.id?.let { id ->
+                            preferences.saveItem(
+                                text = item.title,
+                                isMarked = item.isMarked,
+                                url = item.url,
+                                id = id
+                            )
+                            preferences.saveCurrentId(id)
+                        }
+                        preferences.saveCurrentIsMarked(item.isMarked)
                         preferences.saveCurrentText(item.title)
                     }
                 }
@@ -54,6 +75,7 @@ class AddEditItemViewModel @Inject constructor(
                     )
                 }
                 _currentUrl.value = preferences.loadCurrentUrl()
+                _currentIsMarked.value = preferences.loadCurrentIsMarked()
             }
         }
     }
@@ -72,31 +94,52 @@ class AddEditItemViewModel @Inject constructor(
                             itemTitle.value.text.isBlank()
                 )
             }
-            is AddEditItemEvent.ChangedImage -> {
-                preferences.saveCurrentUrl(event.url)
+            is AddEditItemEvent.DeleteImage -> {
+                preferences.saveCurrentUrl(null)
+                _currentUrl.value = null
+                viewModelScope.launch {
+                    currentItem?.let { item ->
+                        item.url = null
+                        itemUseCases.updateItem(item)
+                    }
+                }
+                event.url?.let { File(it).delete() }
+            }
+            is AddEditItemEvent.MarkingItem -> {
+                _currentIsMarked.value = !currentIsMarked.value
+                preferences.saveCurrentIsMarked(_currentIsMarked.value)
             }
             is AddEditItemEvent.SaveItem -> {
                 viewModelScope.launch {
                     try {
                         itemUseCases.addItem(
-                            Item(
                                 title = itemTitle.value.text,
-                                url = preferences.loadCurrentUrl(),
+                                url = currentUrl.value,
+                                isMarked = currentIsMarked.value,
                                 id = if(preferences.loadCurrentId() == -1) null else
                                         preferences.loadCurrentId(),
-                            )
                         )
                         _eventFlow.emit(UiEvent.SaveItem)
+                        clearCurrentItem()
                     } catch(e: InvalidItemException) {
                         _eventFlow.emit(
                             UiEvent.ShowSnackBar(
-                                message = e.message ?: "Couldn't save item"
+                                message = e.message ?:
+                                resourceProvider.getString(R.string.could_not_save_item)
                             )
                         )
                     }
                 }
             }
         }
+    }
+
+    private fun clearCurrentItem() {
+        preferences.saveCurrentId(-1)
+        preferences.saveCurrentText(null)
+        preferences.saveCurrentUrl(null)
+        preferences.saveCurrentIsMarked(false)
+        preferences.saveItem(null, false, null, -1)
     }
 
     sealed class UiEvent {

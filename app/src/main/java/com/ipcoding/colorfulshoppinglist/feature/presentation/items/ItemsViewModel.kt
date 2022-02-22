@@ -14,6 +14,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,7 +38,17 @@ class ItemsViewModel @Inject constructor(
     private fun clearCurrentItem() {
         preferences.saveCurrentId(-1)
         preferences.saveCurrentText(null)
+        preferences.loadCurrentUrl()?.let { File(it).delete() }
         preferences.saveCurrentUrl(null)
+        preferences.saveCurrentIsMarked(false)
+        preferences.loadItem()?.let { item ->
+            if(item.id != -1) {
+                viewModelScope.launch {
+                    itemUseCases.updateItem(item)
+                }
+                preferences.saveItem(null, false, null, -1)
+            }
+        }
     }
 
     fun onEvent(event: ItemsEvent) {
@@ -72,7 +83,7 @@ class ItemsViewModel @Inject constructor(
             }
             is ItemsEvent.RestoreItem -> {
                 viewModelScope.launch {
-                    itemUseCases.addItem(recentlyDeletedItem ?: return@launch)
+                    itemUseCases.updateItem(recentlyDeletedItem ?: return@launch)
                     recentlyDeletedItem = null
                 }
             }

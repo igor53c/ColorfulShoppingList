@@ -20,6 +20,7 @@ fun AddEditItemScreen(
     viewModel: AddEditItemViewModel = hiltViewModel()
 ) {
     val titleState = viewModel.itemTitle.value
+    val currentIsMarked = viewModel.currentIsMarked.value
     val scaffoldState = rememberScaffoldState()
 
     LaunchedEffect(key1 = true) {
@@ -47,7 +48,9 @@ fun AddEditItemScreen(
         ) {
 
             TopRow(
-                onIconClick = { viewModel.onEvent(AddEditItemEvent.SaveItem) },
+                onSaveClick = { viewModel.onEvent(AddEditItemEvent.SaveItem) },
+                onMarkingClick = { viewModel.onEvent(AddEditItemEvent.MarkingItem) },
+                isMarked = currentIsMarked,
                 navController = navController
             )
             Divider(

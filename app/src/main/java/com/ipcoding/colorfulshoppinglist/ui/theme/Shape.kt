@@ -8,17 +8,17 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 
-val SmallShapes = CustomShapes(roundedCornerShape = RoundedCornerShape(6.dp))
+val SmallShapes = CustomShapes(roundedCornerShape = RoundedCornerShape(12.dp))
 
-val NormalShapes = CustomShapes(roundedCornerShape = RoundedCornerShape(8.dp))
+val NormalShapes = CustomShapes(roundedCornerShape = RoundedCornerShape(16.dp))
 
-val LargeShapes = CustomShapes(roundedCornerShape = RoundedCornerShape(12.dp))
+val LargeShapes = CustomShapes(roundedCornerShape = RoundedCornerShape(24.dp))
 
-val ExtraLargeShapes = CustomShapes(roundedCornerShape = RoundedCornerShape(16.dp))
+val ExtraLargeShapes = CustomShapes(roundedCornerShape = RoundedCornerShape(32.dp))
 
 @Immutable
 class CustomShapes(
-    val roundedCornerShape: CornerBasedShape = RoundedCornerShape(4.dp),
+    val roundedCornerShape: CornerBasedShape = RoundedCornerShape(16.dp),
     val rectangleShape: Shape = RectangleShape
 )
 

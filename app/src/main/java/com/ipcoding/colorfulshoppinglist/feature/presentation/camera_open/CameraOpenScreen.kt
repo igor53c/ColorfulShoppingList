@@ -5,12 +5,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.ipcoding.colorfulshoppinglist.feature.presentation.camera_open.components.SimpleCameraPreview
 import com.ipcoding.colorfulshoppinglist.feature.presentation.util.Screen
 import java.io.File
 
-@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun CameraOpenScreen(
     navController: NavController,

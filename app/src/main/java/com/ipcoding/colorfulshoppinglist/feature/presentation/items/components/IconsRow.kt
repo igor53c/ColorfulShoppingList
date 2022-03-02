@@ -70,11 +70,7 @@ fun IconsRow(
                 tint = AppTheme.colors.primary
             )
         }
-        IconButton(
-            onClick = {
-                navController.navigate(Screen.AddEditItemScreen.route)
-            },
-        ) {
+        IconButton(onClick = { navController.navigate(Screen.AddEditItemScreen.route) }) {
             Icon(
                 imageVector = Icons.Default.Add,
                 contentDescription = stringResource(id = R.string.add_item),
@@ -83,11 +79,7 @@ fun IconsRow(
                 tint = AppTheme.colors.primary
             )
         }
-        IconButton(onClick = {
-            scope.launch {
-                scaffoldState.drawerState.open()
-            }
-        }) {
+        IconButton(onClick = { scope.launch { scaffoldState.drawerState.open() } }) {
             Icon(
                 imageVector = Icons.Filled.Menu,
                 contentDescription = stringResource(id = R.string.add_item),

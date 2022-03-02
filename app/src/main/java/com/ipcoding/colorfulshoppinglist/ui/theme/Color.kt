@@ -3,8 +3,8 @@ package com.ipcoding.colorfulshoppinglist.ui.theme
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
-val Green = Color(0xFF00CCFF)
-val Blue100 = Color(0xFF00A8EA)
+val Green = Color(0xFF7CB342)
+val Blue100 = Color(0xFF000DFF)
 
 object Colors {
     val Blue = Blue100

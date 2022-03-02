@@ -2,24 +2,20 @@ package com.ipcoding.colorfulshoppinglist.feature.presentation.camera_open.compo
 
 import android.content.Context
 import android.net.Uri
-import android.widget.Toast
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Cameraswitch
-import androidx.compose.material.icons.filled.FlashlightOff
-import androidx.compose.material.icons.filled.FlashlightOn
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
@@ -99,13 +95,12 @@ fun SimpleCameraPreview(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(AppTheme.dimensions.spaceMedium)
-                    .clip(AppTheme.customShapes.roundedCornerShape)
+                    .clip(RectangleShape)
                     .background(
                         color = AppTheme.colors.primary,
-                        shape = AppTheme.customShapes.roundedCornerShape
+                        shape = RectangleShape
                     )
-                    .padding(AppTheme.dimensions.spaceSmall)
+                    .padding(AppTheme.dimensions.spaceMedium)
                     .align(Alignment.BottomCenter)
             ) {
                 IconButton(
@@ -157,22 +152,15 @@ fun SimpleCameraPreview(
                         )
                     },
                     modifier = Modifier
-                        .size(AppTheme.dimensions.spaceExtraLarge)
-                        .background(
-                            color = AppTheme.colors.primary,
-                            shape = CircleShape
-                        )
+                        .size(AppTheme.dimensions.spaceLarge)
                         .shadow(
                             elevation = AppTheme.dimensions.spaceExtraSmall,
-                            shape = CircleShape
+                            shape = AppTheme.customShapes.roundedCornerShape
                         )
-                        .clip(CircleShape)
-                        .border(
-                            width = AppTheme.dimensions.spaceExtraSmall,
-                            color = AppTheme.colors.background,
-                            shape = CircleShape
-                        ),
-                    colors = ButtonDefaults.buttonColors(backgroundColor = AppTheme.colors.primary),
+                        .clip(AppTheme.customShapes.roundedCornerShape),
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = AppTheme.colors.background
+                    )
                 ) {}
 
                 IconButton(
@@ -194,7 +182,7 @@ fun SimpleCameraPreview(
                     }
                 ) {
                     Icon(
-                        imageVector = Icons.Filled.Cameraswitch,
+                        imageVector = Icons.Filled.SwitchCamera,
                         contentDescription = stringResource(id = R.string.camera_switch_icon),
                         modifier = Modifier.size(AppTheme.dimensions.spaceExtraMedium),
                         tint = AppTheme.colors.surface

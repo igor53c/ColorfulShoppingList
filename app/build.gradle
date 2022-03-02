@@ -8,9 +8,6 @@ plugins {
 android {
     compileSdk 31
 
-    def localProperties = new Properties()
-    localProperties.load(new FileInputStream(rootProject.file("local.properties")))
-
     defaultConfig {
         applicationId "com.ipcoding.colorfulshoppinglist"
         minSdk 21

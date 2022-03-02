@@ -3,13 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.306" />
         <entry key="app/src/main/res/drawable-v24/ic_outline_flashlight_off.xml" value="0.1415" />
         <entry key="app/src/main/res/drawable-v24/ic_outline_flashlight_on.xml" value="0.1415" />
         <entry key="app/src/main/res/drawable-v24/ic_outline_rotate.xml" value="0.1415" />
         <entry key="app/src/main/res/drawable/ic_image.xml" value="0.1945" />
         <entry key="app/src/main/res/drawable/ic_image_.xml" value="0.1945" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1945" />
+        <entry key="app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.306" />
         <entry key="app/src/main/res/drawable/ic_produkti.xml" value="0.1865" />
+        <entry key="app/src/main/res/drawable/icon_foreground.xml" value="0.306" />
+        <entry key="app/src/main/res/drawable/icon_splash.xml" value="0.1825" />
+        <entry key="app/src/main/res/drawable/splash_drawable.xml" value="0.306" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.306" />
       </map>
     </option>
   </component>

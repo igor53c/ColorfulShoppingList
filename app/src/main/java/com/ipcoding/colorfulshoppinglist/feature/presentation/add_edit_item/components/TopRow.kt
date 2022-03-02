@@ -2,9 +2,11 @@ package com.ipcoding.colorfulshoppinglist.feature.presentation.add_edit_item.com
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.runtime.Composable
@@ -12,6 +14,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
@@ -44,20 +48,29 @@ fun TopRow(
         Column(
             modifier = Modifier.padding(end = AppTheme.dimensions.spaceMedium)
         ) {
-            Icon(
-                imageVector = Icons.Default.Save,
-                contentDescription = stringResource(id = R.string.save),
-                tint = AppTheme.colors.primary,
-                modifier = Modifier
-                    .size(AppTheme.dimensions.spaceExtraLarge)
-                    .clickable { onSaveClick() }
-
-            )
+            IconButton(
+                onClick = onSaveClick
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Save,
+                    contentDescription = stringResource(id = R.string.save),
+                    tint = AppTheme.colors.primary,
+                    modifier = Modifier
+                        .size(AppTheme.dimensions.spaceExtraLarge)
+                )
+            }
 
             Spacer(modifier = Modifier.height(AppTheme.dimensions.spaceLarge))
 
-            Box(
+            Button(
+                onClick = onMarkingClick,
                 modifier = Modifier
+                    .size(AppTheme.dimensions.spaceExtraLarge)
+                    .shadow(
+                        elevation = AppTheme.dimensions.spaceExtraSmall,
+                        shape = AppTheme.customShapes.roundedCornerShape
+                    )
+                    .clip(AppTheme.customShapes.roundedCornerShape)
                     .border(
                         width = AppTheme.dimensions.spaceExtraSmall,
                         color = AppTheme.colors.primary,
@@ -66,10 +79,11 @@ fun TopRow(
                     .background(
                         color = markingColor.value,
                         shape = AppTheme.customShapes.roundedCornerShape
-                    )
-                    .size(AppTheme.dimensions.spaceExtraLarge)
-                    .clickable { onMarkingClick() }
-            )
+                    ),
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = markingColor.value
+                )
+            ) {}
         }
     }
 }

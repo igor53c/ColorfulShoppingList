@@ -4,9 +4,7 @@ import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -16,8 +14,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -26,7 +24,6 @@ import coil.transform.RoundedCornersTransformation
 import com.ipcoding.colorfulshoppinglist.feature.domain.model.Item
 import com.ipcoding.colorfulshoppinglist.ui.theme.AppTheme
 import com.ipcoding.colorfulshoppinglist.R
-import com.ipcoding.colorfulshoppinglist.ui.theme.Colors
 import java.io.File
 
 @Composable
@@ -36,18 +33,19 @@ fun OneItem(
     onEditClick: () -> Unit,
     onDeleteClick: () -> Unit
 ) {
-    val textColor = remember { mutableStateOf(Colors.Blue)}
+    val textColor = remember { mutableStateOf(Color.Transparent)}
     val backgroundColor = remember { mutableStateOf(Color.Transparent)}
     val imageUri = remember { mutableStateOf<Uri?>(null) }
 
-    item.url?.let { imageUri.value = Uri.fromFile(File(it)) }
+    imageUri.value = if(item.url == null) null else
+        item.url?.run { Uri.fromFile(File(this)) }
 
     if(item.isMarked) {
-        backgroundColor.value = Color(Colors.Blue.toArgb())
-        textColor.value = Color(AppTheme.colors.background.toArgb())
+        backgroundColor.value = AppTheme.colors.primary
+        textColor.value = AppTheme.colors.background
     } else {
-        backgroundColor.value = Color(AppTheme.colors.background.toArgb())
-        textColor.value = Color(Colors.Blue.toArgb())
+        backgroundColor.value = AppTheme.colors.background
+        textColor.value = AppTheme.colors.primary
     }
     BoxWithConstraints(
         modifier = modifier
@@ -57,32 +55,27 @@ fun OneItem(
             )
             .border(
                 width = AppTheme.dimensions.spaceExtraSmall,
-                color = textColor.value,
+                color = AppTheme.colors.primary,
                 shape = AppTheme.customShapes.roundedCornerShape
             )
+            .clip(AppTheme.customShapes.roundedCornerShape)
     ) {
         val size = this.maxWidth - AppTheme.dimensions.spaceLarge
 
-        Icon(
+        OneItemIcon(
+            modifier = Modifier.align(alignment = Alignment.TopEnd),
             imageVector = Icons.Default.EditNote,
             contentDescription = stringResource(id = R.string.edit_item),
             tint = textColor.value,
-            modifier = Modifier
-                .padding(AppTheme.dimensions.spaceSmall)
-                .size(AppTheme.dimensions.spaceExtraMedium)
-                .align(alignment = Alignment.TopEnd)
-                .clickable { onEditClick() }
+            onClick = onEditClick
         )
 
-        Icon(
+        OneItemIcon(
+            modifier = Modifier .align(alignment = Alignment.BottomEnd),
             imageVector = Icons.Default.Delete,
             contentDescription = stringResource(id = R.string.delete_item),
             tint = textColor.value,
-            modifier = Modifier
-                .padding(AppTheme.dimensions.spaceSmall)
-                .size(AppTheme.dimensions.spaceExtraMedium)
-                .align(alignment = Alignment.BottomEnd)
-                .clickable { onDeleteClick() }
+            onClick = onDeleteClick
         )
 
         Column(

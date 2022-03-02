@@ -1,6 +1,5 @@
 package com.ipcoding.colorfulshoppinglist.feature.presentation.items
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
@@ -14,7 +13,6 @@ import com.ipcoding.colorfulshoppinglist.feature.presentation.items.components.I
 import com.ipcoding.colorfulshoppinglist.feature.presentation.items.components.ItemsRow
 import com.ipcoding.colorfulshoppinglist.ui.theme.AppTheme
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ItemsScreen(
     navController: NavController,
@@ -27,7 +25,7 @@ fun ItemsScreen(
     Scaffold(
         scaffoldState = scaffoldState,
         backgroundColor = AppTheme.colors.background,
-        drawerContent = { Drawer(scope)},
+        drawerContent = { Drawer(scope) },
         drawerBackgroundColor = AppTheme.colors.background,
         drawerShape = AppTheme.customShapes.roundedCornerShape,
         drawerScrimColor = AppTheme.colors.primary,
@@ -62,7 +60,8 @@ fun ItemsScreen(
                             items = state.items,
                             navController = navController,
                             viewModel = viewModel,
-                            scaffoldState = scaffoldState
+                            scaffoldState = scaffoldState,
+                            scope = scope
                         )
                         Spacer(modifier = Modifier.height(AppTheme.dimensions.spaceSmall))
                     }

@@ -1,9 +1,9 @@
 package com.ipcoding.colorfulshoppinglist.feature.presentation.items.components
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.ScaffoldState
+import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -16,18 +16,18 @@ import com.ipcoding.colorfulshoppinglist.feature.presentation.items.ItemsViewMod
 import com.ipcoding.colorfulshoppinglist.feature.presentation.util.Screen
 import com.ipcoding.colorfulshoppinglist.ui.theme.AppTheme
 import com.ipcoding.colorfulshoppinglist.R
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ItemsRow(
     rowIndex: Int,
     items: List<Item>,
     navController: NavController,
     viewModel: ItemsViewModel,
-    scaffoldState: ScaffoldState
+    scaffoldState: ScaffoldState,
+    scope: CoroutineScope
 ) {
-    val scope = rememberCoroutineScope()
     val textItemDeleted = stringResource(id = R.string.item_deleted)
     val textUndo = stringResource(id = R.string.undo)
 
@@ -56,8 +56,8 @@ fun ItemsRow(
                     }
                 },
                 onEditClick = {
-                    navController.navigate(Screen.AddEditItemScreen.route +
-                                "?itemId=${item1.id}"
+                    navController.navigate(
+                        Screen.AddEditItemScreen.route + "?itemId=${item1.id}"
                     )
                 }
             )
@@ -76,7 +76,8 @@ fun ItemsRow(
                         scope.launch {
                             val result = scaffoldState.snackbarHostState.showSnackbar(
                                 message = textItemDeleted,
-                                actionLabel = textUndo
+                                actionLabel = textUndo,
+                                duration = SnackbarDuration.Long
                             )
                             if(result == SnackbarResult.ActionPerformed) {
                                 viewModel.onEvent(ItemsEvent.RestoreItem)
@@ -85,8 +86,7 @@ fun ItemsRow(
                     },
                     onEditClick = {
                         navController.navigate(
-                            Screen.AddEditItemScreen.route +
-                                    "?itemId=${item2.id}"
+                            Screen.AddEditItemScreen.route + "?itemId=${item2.id}"
                         )
                     }
                 )

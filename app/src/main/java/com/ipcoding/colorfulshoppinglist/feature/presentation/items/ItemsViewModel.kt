@@ -26,6 +26,9 @@ class ItemsViewModel @Inject constructor(
     private val _state = mutableStateOf(ItemsState())
     val state: State<ItemsState> = _state
 
+    private val _isImageDisplayed = mutableStateOf(true)
+    val isImageDisplayed: State<Boolean> = _isImageDisplayed
+
     private var recentlyDeletedItem: Item? = null
 
     private var getItemsJob: Job? = null
@@ -33,6 +36,11 @@ class ItemsViewModel @Inject constructor(
     init {
         getItems(ItemOrder.IsMarked(OrderType.Ascending))
         clearCurrentItem()
+        loadIsImageDisplayed()
+    }
+
+    private fun loadIsImageDisplayed() {
+        _isImageDisplayed.value = preferences.loadIsImageDisplayed()
     }
 
     private fun clearCurrentItem() {
@@ -86,6 +94,14 @@ class ItemsViewModel @Inject constructor(
                     itemUseCases.updateItem(recentlyDeletedItem ?: return@launch)
                     recentlyDeletedItem = null
                 }
+            }
+            is ItemsEvent.ItemWithImage -> {
+                _isImageDisplayed.value = true
+                preferences.saveIsImageDisplayed(true)
+            }
+            is ItemsEvent.ItemWithoutImage -> {
+                _isImageDisplayed.value = false
+                preferences.saveIsImageDisplayed(false)
             }
         }
     }

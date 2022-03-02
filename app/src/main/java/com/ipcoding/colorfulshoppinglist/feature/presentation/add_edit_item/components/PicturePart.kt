@@ -62,9 +62,9 @@ fun PicturePart(
         Image(
             contentDescription = stringResource(id = R.string.icon_image),
             painter = rememberImagePainter(
-                data = if(selectedImage.value != null) selectedImage.value else R.drawable.ic_image,
+                data = if(selectedImage.value != null) selectedImage.value else R.drawable.image_icon,
                 builder = {
-                    placeholder(R.drawable.ic_image)
+                    placeholder(R.drawable.image_icon)
                     crossfade(CROSSFADE_DURATION_MILLIS)
                     transformations(
                         RoundedCornersTransformation(AppTheme.dimensions.spaceLarge.value)

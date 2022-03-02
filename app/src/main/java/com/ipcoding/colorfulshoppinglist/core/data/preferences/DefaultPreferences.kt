@@ -52,6 +52,17 @@ class DefaultPreferences(
         return sharedPreferences.getInt(Preferences.CURRENT_ID, -1)
     }
 
+    override fun saveIsImageDisplayed(isImageDisplayed: Boolean) {
+        sharedPreferences
+            .edit()
+            .putBoolean(Preferences.IS_IMAGE_DISPLAYED, isImageDisplayed)
+            .apply()
+    }
+
+    override fun loadIsImageDisplayed(): Boolean {
+        return sharedPreferences.getBoolean(Preferences.IS_IMAGE_DISPLAYED, true)
+    }
+
     override fun saveItem(text: String?, isMarked: Boolean, url: String?, id: Int) {
         sharedPreferences
             .edit()

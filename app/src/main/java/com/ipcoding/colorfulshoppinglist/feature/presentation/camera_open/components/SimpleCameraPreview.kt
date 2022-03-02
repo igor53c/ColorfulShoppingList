@@ -182,7 +182,7 @@ fun SimpleCameraPreview(
                     }
                 ) {
                     Icon(
-                        imageVector = Icons.Filled.SwitchCamera,
+                        imageVector = Icons.Filled.Cameraswitch,
                         contentDescription = stringResource(id = R.string.camera_switch_icon),
                         modifier = Modifier.size(AppTheme.dimensions.spaceExtraMedium),
                         tint = AppTheme.colors.surface

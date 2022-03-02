@@ -6,16 +6,13 @@ import androidx.compose.material.ScaffoldState
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.SnackbarResult
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.ipcoding.colorfulshoppinglist.feature.domain.model.Item
 import com.ipcoding.colorfulshoppinglist.feature.presentation.items.ItemsEvent
 import com.ipcoding.colorfulshoppinglist.feature.presentation.items.ItemsViewModel
 import com.ipcoding.colorfulshoppinglist.feature.presentation.util.Screen
 import com.ipcoding.colorfulshoppinglist.ui.theme.AppTheme
-import com.ipcoding.colorfulshoppinglist.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -26,11 +23,10 @@ fun ItemsRow(
     navController: NavController,
     viewModel: ItemsViewModel,
     scaffoldState: ScaffoldState,
-    scope: CoroutineScope
+    scope: CoroutineScope,
+    textItemDeleted: String,
+    textUndo: String,
 ) {
-    val textItemDeleted = stringResource(id = R.string.item_deleted)
-    val textUndo = stringResource(id = R.string.undo)
-
     Column(
         modifier = Modifier
     ) {

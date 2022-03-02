@@ -14,6 +14,8 @@
         <entry key="app/src/main/res/drawable/ic_produkti.xml" value="0.1865" />
         <entry key="app/src/main/res/drawable/icon_foreground.xml" value="0.306" />
         <entry key="app/src/main/res/drawable/icon_splash.xml" value="0.1825" />
+        <entry key="app/src/main/res/drawable/icon_splash2.xml" value="0.1825" />
+        <entry key="app/src/main/res/drawable/image_icon.xml" value="0.1825" />
         <entry key="app/src/main/res/drawable/splash_drawable.xml" value="0.306" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.306" />
       </map>

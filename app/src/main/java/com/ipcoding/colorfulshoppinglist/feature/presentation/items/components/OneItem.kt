@@ -14,7 +14,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
@@ -35,6 +34,7 @@ fun OneItem(
 ) {
     val textColor = remember { mutableStateOf(Color.Transparent)}
     val backgroundColor = remember { mutableStateOf(Color.Transparent)}
+    val borderColor = remember { mutableStateOf(Color.Transparent)}
     val imageUri = remember { mutableStateOf<Uri?>(null) }
 
     imageUri.value = if(item.url == null) null else
@@ -43,9 +43,11 @@ fun OneItem(
     if(item.isMarked) {
         backgroundColor.value = AppTheme.colors.primary
         textColor.value = AppTheme.colors.background
+        borderColor.value = Color.Transparent
     } else {
         backgroundColor.value = AppTheme.colors.background
         textColor.value = AppTheme.colors.primary
+        borderColor.value = AppTheme.colors.primary
     }
     BoxWithConstraints(
         modifier = modifier
@@ -55,10 +57,9 @@ fun OneItem(
             )
             .border(
                 width = AppTheme.dimensions.spaceExtraSmall,
-                color = AppTheme.colors.primary,
+                color = borderColor.value,
                 shape = AppTheme.customShapes.roundedCornerShape
             )
-            .clip(AppTheme.customShapes.roundedCornerShape)
     ) {
         val size = this.maxWidth - AppTheme.dimensions.spaceLarge
 
@@ -71,7 +72,7 @@ fun OneItem(
         )
 
         OneItemIcon(
-            modifier = Modifier .align(alignment = Alignment.BottomEnd),
+            modifier = Modifier.align(alignment = Alignment.BottomEnd),
             imageVector = Icons.Default.Delete,
             contentDescription = stringResource(id = R.string.delete_item),
             tint = textColor.value,
@@ -91,9 +92,9 @@ fun OneItem(
             Image(
                 contentDescription = stringResource(id = R.string.icon_image),
                 painter = rememberImagePainter(
-                    data = if (imageUri.value != null) imageUri.value else R.drawable.ic_image,
+                    data = if (imageUri.value != null) imageUri.value else R.drawable.image_icon,
                     builder = {
-                        placeholder(R.drawable.ic_image)
+                        placeholder(R.drawable.image_icon)
                         transformations(
                             RoundedCornersTransformation(AppTheme.dimensions.spaceLarge.value)
                         )

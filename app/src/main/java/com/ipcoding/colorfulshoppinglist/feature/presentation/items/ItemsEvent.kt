@@ -8,4 +8,6 @@ sealed class ItemsEvent {
     data class DeleteItem(val item: Item): ItemsEvent()
     data class UpdateItem(val item: Item): ItemsEvent()
     object RestoreItem: ItemsEvent()
+    object ItemWithImage: ItemsEvent()
+    object ItemWithoutImage: ItemsEvent()
 }

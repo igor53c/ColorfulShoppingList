@@ -17,6 +17,9 @@ interface Preferences {
     fun saveItem(text: String?, isMarked: Boolean, url: String?, id: Int)
     fun loadItem() : Item?
 
+    fun saveIsImageDisplayed(isImageDisplayed: Boolean)
+    fun loadIsImageDisplayed(): Boolean
+
     companion object {
         const val CURRENT_URL = "current_url"
         const val CURRENT_ID = "current_id"
@@ -27,5 +30,7 @@ interface Preferences {
         const val ITEM_ID = "item_id"
         const val ITEM_TEXT = "item_text"
         const val ITEM_IS_MARKED = "item_is_marked"
+
+        const val IS_IMAGE_DISPLAYED = "is_image_displayed"
     }
 }

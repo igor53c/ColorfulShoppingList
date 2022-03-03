@@ -11,6 +11,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
+import com.ipcoding.colorfulshoppinglist.core.util.TestTags.TITLE_TEXT_FIELD
 import com.ipcoding.colorfulshoppinglist.ui.theme.AppTheme
 
 @Composable
@@ -22,7 +23,6 @@ fun TransparentHintTextField(
     onValueChange: (String) -> Unit,
     textStyle: TextStyle = TextStyle(),
     singleLine: Boolean = false,
-    testTag: String = "",
     onFocusChange: (FocusState) -> Unit
 ) {
     Box(
@@ -35,7 +35,7 @@ fun TransparentHintTextField(
             maxLines = 5,
             textStyle = textStyle,
             modifier = Modifier
-                .testTag(testTag)
+                .testTag(TITLE_TEXT_FIELD)
                 .fillMaxWidth()
                 .onFocusChanged {
                     onFocusChange(it)

@@ -81,7 +81,7 @@ fun IconsRow(
         IconButton(onClick = { openDialog.value = true }) {
             Icon(
                 imageVector = Icons.Filled.Menu,
-                contentDescription = stringResource(id = R.string.add_item),
+                contentDescription = stringResource(id = R.string.icon_menu),
                 modifier = Modifier
                     .size(AppTheme.dimensions.spaceLarge),
                 tint = AppTheme.colors.primary

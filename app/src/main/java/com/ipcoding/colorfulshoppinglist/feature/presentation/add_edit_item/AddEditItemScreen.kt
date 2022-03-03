@@ -5,9 +5,11 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.ipcoding.colorfulshoppinglist.core.util.TestTags
+import com.ipcoding.colorfulshoppinglist.core.util.TestTags.TITLE_TEXT_FIELD
 import com.ipcoding.colorfulshoppinglist.feature.presentation.add_edit_item.components.TopRow
 import com.ipcoding.colorfulshoppinglist.feature.presentation.add_edit_item.components.TransparentHintTextField
 import com.ipcoding.colorfulshoppinglist.feature.presentation.util.Screen
@@ -68,8 +70,8 @@ fun AddEditItemScreen(
                 },
                 isHintVisible = titleState.isHintVisible,
                 textStyle = AppTheme.typography.h5,
-                modifier = Modifier.fillMaxHeight(),
-                testTag = TestTags.TITLE_TEXT_FIELD
+                modifier = Modifier
+                    .fillMaxHeight()
             )
         }
     }

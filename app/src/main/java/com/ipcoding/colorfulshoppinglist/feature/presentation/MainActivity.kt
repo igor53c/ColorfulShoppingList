@@ -68,7 +68,7 @@ class MainActivity : ComponentActivity() {
     }
 
     //Store the capture image
-    private fun getDirectory(): File {
+    fun getDirectory(): File {
         val mediaDir = externalMediaDirs.firstOrNull()?.let {
             File(it, resources.getString(R.string.app_name)).apply { mkdirs() }
         }

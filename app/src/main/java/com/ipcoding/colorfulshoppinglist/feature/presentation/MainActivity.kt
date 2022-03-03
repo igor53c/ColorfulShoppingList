@@ -5,30 +5,49 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.material.Surface
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.ipcoding.colorfulshoppinglist.R
-import com.ipcoding.colorfulshoppinglist.feature.presentation.util.Screen
-import com.ipcoding.colorfulshoppinglist.ui.theme.AppTheme
 import com.ipcoding.colorfulshoppinglist.feature.presentation.add_edit_item.AddEditItemScreen
 import com.ipcoding.colorfulshoppinglist.feature.presentation.camera_open.CameraOpenScreen
 import com.ipcoding.colorfulshoppinglist.feature.presentation.items.ItemsScreen
+import com.ipcoding.colorfulshoppinglist.feature.presentation.util.Screen
+import com.ipcoding.colorfulshoppinglist.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private val isStatusBarVisibleLiveData = MutableLiveData(false)
+
+    override fun onResume() {
+        super.onResume()
+        isStatusBarVisibleLiveData.value = false
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val systemUiController = rememberSystemUiController()
+            systemUiController.isStatusBarVisible = false
+
+            isStatusBarVisibleLiveData.observeForever {
+                systemUiController.isStatusBarVisible = it
+            }
+
             AppTheme {
                 Surface(
-                   color = AppTheme.colors.background
+                    color = AppTheme.colors.background
                 ) {
                     val navController = rememberNavController()
+                    systemUiController.setNavigationBarColor(color = AppTheme.colors.primary)
+
                     NavHost(
                         navController = navController,
                         startDestination = Screen.ItemsScreen.route
@@ -68,7 +87,7 @@ class MainActivity : ComponentActivity() {
     }
 
     //Store the capture image
-    fun getDirectory(): File {
+    private fun getDirectory(): File {
         val mediaDir = externalMediaDirs.firstOrNull()?.let {
             File(it, resources.getString(R.string.app_name)).apply { mkdirs() }
         }

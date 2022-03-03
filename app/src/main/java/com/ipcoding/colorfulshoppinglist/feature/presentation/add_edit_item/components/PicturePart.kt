@@ -4,7 +4,10 @@ import android.Manifest
 import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,9 +40,9 @@ fun PicturePart(
     val selectedImage = remember { mutableStateOf<Uri?>(null) }
     val cameraPermissionState = rememberPermissionState(permission = Manifest.permission.CAMERA)
 
-    if(currentUrl != null) selectedImage.value = Uri.fromFile(File(currentUrl))
+    if (currentUrl != null) selectedImage.value = Uri.fromFile(File(currentUrl))
 
-    if(openDialog.value) {
+    if (openDialog.value) {
         ImageSelectionDialog(
             onCameraClick = {
                 navController.navigate(Screen.CameraOpenScreen.route)
@@ -62,7 +65,7 @@ fun PicturePart(
         Image(
             contentDescription = stringResource(id = R.string.icon_image),
             painter = rememberImagePainter(
-                data = if(selectedImage.value != null) selectedImage.value else R.drawable.image_icon,
+                data = if (selectedImage.value != null) selectedImage.value else R.drawable.image_icon,
                 builder = {
                     placeholder(R.drawable.image_icon)
                     crossfade(CROSSFADE_DURATION_MILLIS)

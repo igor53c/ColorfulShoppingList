@@ -32,7 +32,7 @@ fun TopRow(
 ) {
     val markingColor = remember { mutableStateOf(Color.Transparent) }
 
-    markingColor.value = if(isMarked) AppTheme.colors.primary else AppTheme.colors.background
+    markingColor.value = if (isMarked) AppTheme.colors.primary else AppTheme.colors.background
 
     Row(
         modifier = modifier

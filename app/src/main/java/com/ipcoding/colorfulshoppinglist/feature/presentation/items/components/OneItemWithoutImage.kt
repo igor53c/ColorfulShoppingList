@@ -35,7 +35,7 @@ fun OneItemWithoutImage(
     val backgroundColor = remember { mutableStateOf(Color.Transparent) }
     val borderColor = remember { mutableStateOf(Color.Transparent) }
 
-    if(item.isMarked) {
+    if (item.isMarked) {
         backgroundColor.value = AppTheme.colors.primary
         textColor.value = AppTheme.colors.background
         borderColor.value = Color.Transparent

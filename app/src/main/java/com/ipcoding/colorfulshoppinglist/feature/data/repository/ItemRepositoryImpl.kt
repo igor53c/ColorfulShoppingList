@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 class ItemRepositoryImpl(
     private val dao: ItemDao
-): ItemRepository {
+) : ItemRepository {
 
     override fun getItemsFlow(): Flow<List<Item>> {
         return dao.getItemsFlow()

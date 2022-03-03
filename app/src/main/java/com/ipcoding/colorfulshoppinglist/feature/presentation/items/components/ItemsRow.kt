@@ -42,7 +42,7 @@ fun ItemsRow(
 
             Spacer(modifier = Modifier.width(AppTheme.dimensions.spaceMedium))
 
-            if(items.size >= rowIndex * 2 + 2) {
+            if (items.size >= rowIndex * 2 + 2) {
                 val item2 = items[rowIndex * 2 + 1]
                 OneItem(
                     item = item2,

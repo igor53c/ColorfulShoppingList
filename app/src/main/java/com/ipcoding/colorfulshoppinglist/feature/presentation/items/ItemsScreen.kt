@@ -36,10 +36,10 @@ fun ItemsScreen(
 
         Spacer(modifier = Modifier.height(AppTheme.dimensions.spaceMedium))
 
-        if(isImageDisplayed) {
+        if (isImageDisplayed) {
             LazyColumn(modifier = Modifier.fillMaxSize()) {
 
-                if(state.items.isNotEmpty()) {
+                if (state.items.isNotEmpty()) {
                     val itemCount = if (state.items.size % 2 == 0) {
                         state.items.size / 2
                     } else {
@@ -59,7 +59,7 @@ fun ItemsScreen(
         } else {
             LazyColumn(modifier = Modifier.fillMaxSize()) {
 
-                if(state.items.isNotEmpty()) {
+                if (state.items.isNotEmpty()) {
                     val items = state.items
                     items(items.size) { number ->
                         val item = items[number]
@@ -86,7 +86,7 @@ fun ItemsScreen(
         }
     }
 
-    if(isDeleteDialogDisplayed) {
+    if (isDeleteDialogDisplayed) {
         DeleteItemView(
             onDismissRequest = { viewModel.onEvent(ItemsEvent.CloseDeleteItemView) },
             onYesClick = { viewModel.onEvent(ItemsEvent.DeleteItem) },

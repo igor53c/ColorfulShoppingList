@@ -14,12 +14,12 @@ class AddItem(
 
     @Throws(InvalidItemException::class)
     suspend operator fun invoke(title: String, isMarked: Boolean, url: String?, id: Int?) {
-        if(title.isBlank()) {
+        if (title.isBlank()) {
             throw InvalidItemException(resourceProvider.getString(R.string.item_cant_empty))
         }
         repository.getItemById(id)?.let { item ->
             item.url?.let { itemUrl ->
-                if(itemUrl != url) File(itemUrl).delete()
+                if (itemUrl != url) File(itemUrl).delete()
             }
         }
         repository.insertItem(

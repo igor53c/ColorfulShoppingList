@@ -15,7 +15,7 @@ interface Preferences {
     fun loadCurrentId(): Int
 
     fun saveItem(text: String?, isMarked: Boolean, url: String?, id: Int)
-    fun loadItem() : Item?
+    fun loadItem(): Item?
 
     fun saveIsImageDisplayed(isImageDisplayed: Boolean)
     fun loadIsImageDisplayed(): Boolean

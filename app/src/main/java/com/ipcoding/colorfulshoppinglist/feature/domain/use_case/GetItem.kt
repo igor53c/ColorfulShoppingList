@@ -3,7 +3,7 @@ package com.ipcoding.colorfulshoppinglist.feature.domain.use_case
 import com.ipcoding.colorfulshoppinglist.feature.domain.model.Item
 import com.ipcoding.colorfulshoppinglist.feature.domain.repository.ItemRepository
 
-class GetItem (
+class GetItem(
     private val repository: ItemRepository
 ) {
 

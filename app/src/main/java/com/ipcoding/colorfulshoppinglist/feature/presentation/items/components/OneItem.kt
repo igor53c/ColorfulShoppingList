@@ -21,10 +21,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import coil.compose.rememberImagePainter
 import coil.transform.RoundedCornersTransformation
-import com.ipcoding.colorfulshoppinglist.feature.domain.model.Item
-import com.ipcoding.colorfulshoppinglist.ui.theme.AppTheme
 import com.ipcoding.colorfulshoppinglist.R
 import com.ipcoding.colorfulshoppinglist.core.util.TestTags.NOTE_ITEM_WITH_IMAGE
+import com.ipcoding.colorfulshoppinglist.feature.domain.model.Item
+import com.ipcoding.colorfulshoppinglist.ui.theme.AppTheme
 import java.io.File
 
 @Composable
@@ -34,15 +34,15 @@ fun OneItem(
     onEditClick: () -> Unit,
     onDeleteClick: () -> Unit
 ) {
-    val textColor = remember { mutableStateOf(Color.Transparent)}
-    val backgroundColor = remember { mutableStateOf(Color.Transparent)}
-    val borderColor = remember { mutableStateOf(Color.Transparent)}
+    val textColor = remember { mutableStateOf(Color.Transparent) }
+    val backgroundColor = remember { mutableStateOf(Color.Transparent) }
+    val borderColor = remember { mutableStateOf(Color.Transparent) }
     val imageUri = remember { mutableStateOf<Uri?>(null) }
 
-    imageUri.value = if(item.url == null) null else
+    imageUri.value = if (item.url == null) null else
         item.url?.run { Uri.fromFile(File(this)) }
 
-    if(item.isMarked) {
+    if (item.isMarked) {
         backgroundColor.value = AppTheme.colors.primary
         textColor.value = AppTheme.colors.background
         borderColor.value = Color.Transparent

@@ -9,7 +9,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Cameraswitch
+import androidx.compose.material.icons.filled.FlashlightOff
+import androidx.compose.material.icons.filled.FlashlightOn
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -126,11 +128,13 @@ fun SimpleCameraPreview(
                 Button(
                     onClick = {
                         val imgCapture = imageCapture ?: return@Button
-                        val photoFile = File(outputDirectory,
+                        val photoFile = File(
+                            outputDirectory,
                             SimpleDateFormat(Constants.IMAGE_OUTPUT_PATTERN, Locale.US)
                                 .format(System.currentTimeMillis()) + Constants.IMAGE_FORMAT
                         )
-                        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
+                        val outputOptions =
+                            ImageCapture.OutputFileOptions.Builder(photoFile).build()
                         imgCapture.takePicture(
                             outputOptions,
                             executor,

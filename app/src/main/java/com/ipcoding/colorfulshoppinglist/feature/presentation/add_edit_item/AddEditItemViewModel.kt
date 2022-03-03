@@ -5,12 +5,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ipcoding.colorfulshoppinglist.R
 import com.ipcoding.colorfulshoppinglist.core.domain.preferences.Preferences
+import com.ipcoding.colorfulshoppinglist.core.domain.resources.ResourceProvider
 import com.ipcoding.colorfulshoppinglist.feature.domain.model.InvalidItemException
 import com.ipcoding.colorfulshoppinglist.feature.domain.model.Item
-import com.ipcoding.colorfulshoppinglist.core.domain.resources.ResourceProvider
 import com.ipcoding.colorfulshoppinglist.feature.domain.use_case.ItemUseCases
-import com.ipcoding.colorfulshoppinglist.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -26,9 +26,11 @@ class AddEditItemViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val _itemTitle = mutableStateOf(ItemTextFieldState(
-        hint =  resourceProvider.getString(R.string.enter_item)
-    ))
+    private val _itemTitle = mutableStateOf(
+        ItemTextFieldState(
+            hint = resourceProvider.getString(R.string.enter_item)
+        )
+    )
     val itemTitle: State<ItemTextFieldState> = _itemTitle
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
@@ -44,7 +46,7 @@ class AddEditItemViewModel @Inject constructor(
 
     init {
         savedStateHandle.get<Int>("itemId")?.let { itemId ->
-            if(itemId != -1) {
+            if (itemId != -1) {
                 viewModelScope.launch {
                     itemUseCases.getItem(itemId)?.also { item ->
                         currentItem = item
@@ -81,7 +83,7 @@ class AddEditItemViewModel @Inject constructor(
     }
 
     fun onEvent(event: AddEditItemEvent) {
-        when(event) {
+        when (event) {
             is AddEditItemEvent.EnteredTitle -> {
                 _itemTitle.value = itemTitle.value.copy(
                     text = event.value
@@ -113,19 +115,19 @@ class AddEditItemViewModel @Inject constructor(
                 viewModelScope.launch {
                     try {
                         itemUseCases.addItem(
-                                title = itemTitle.value.text,
-                                url = currentUrl.value,
-                                isMarked = currentIsMarked.value,
-                                id = if(preferences.loadCurrentId() == -1) null else
-                                        preferences.loadCurrentId(),
+                            title = itemTitle.value.text,
+                            url = currentUrl.value,
+                            isMarked = currentIsMarked.value,
+                            id = if (preferences.loadCurrentId() == -1) null else
+                                preferences.loadCurrentId(),
                         )
                         _eventFlow.emit(UiEvent.SaveItem)
                         clearCurrentItem()
-                    } catch(e: InvalidItemException) {
+                    } catch (e: InvalidItemException) {
                         _eventFlow.emit(
                             UiEvent.ShowSnackBar(
-                                message = e.message ?:
-                                resourceProvider.getString(R.string.could_not_save_item)
+                                message = e.message
+                                    ?: resourceProvider.getString(R.string.could_not_save_item)
                             )
                         )
                     }
@@ -143,7 +145,7 @@ class AddEditItemViewModel @Inject constructor(
     }
 
     sealed class UiEvent {
-        data class ShowSnackBar(val message: String): UiEvent()
-        object SaveItem: UiEvent()
+        data class ShowSnackBar(val message: String) : UiEvent()
+        object SaveItem : UiEvent()
     }
 }

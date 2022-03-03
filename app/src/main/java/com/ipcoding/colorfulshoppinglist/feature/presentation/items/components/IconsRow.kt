@@ -89,7 +89,7 @@ fun IconsRow(
         }
     }
 
-    if(openDialog.value) {
-        ChangeListView(onDismissRequest = { openDialog.value = false } )
+    if (openDialog.value) {
+        ChangeListView(onDismissRequest = { openDialog.value = false })
     }
 }

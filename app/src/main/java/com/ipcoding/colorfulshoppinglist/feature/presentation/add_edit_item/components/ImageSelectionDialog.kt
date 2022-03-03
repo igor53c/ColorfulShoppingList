@@ -12,11 +12,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.ipcoding.colorfulshoppinglist.ui.theme.AppTheme
 import com.ipcoding.colorfulshoppinglist.R
+import com.ipcoding.colorfulshoppinglist.ui.theme.AppTheme
 
 @Composable
-fun ImageSelectionDialog (
+fun ImageSelectionDialog(
     onDeleteClick: () -> Unit,
     onCameraClick: () -> Unit,
     onCancelClick: () -> Unit

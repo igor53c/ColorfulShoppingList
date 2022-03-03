@@ -7,10 +7,10 @@ import androidx.room.Room
 import com.ipcoding.colorfulshoppinglist.core.data.preferences.DefaultPreferences
 import com.ipcoding.colorfulshoppinglist.core.data.resources.AndroidResourceProvider
 import com.ipcoding.colorfulshoppinglist.core.domain.preferences.Preferences
+import com.ipcoding.colorfulshoppinglist.core.domain.resources.ResourceProvider
 import com.ipcoding.colorfulshoppinglist.feature.data.data_source.ItemDatabase
 import com.ipcoding.colorfulshoppinglist.feature.data.repository.ItemRepositoryImpl
 import com.ipcoding.colorfulshoppinglist.feature.domain.repository.ItemRepository
-import com.ipcoding.colorfulshoppinglist.core.domain.resources.ResourceProvider
 import com.ipcoding.colorfulshoppinglist.feature.domain.use_case.*
 import dagger.Module
 import dagger.Provides

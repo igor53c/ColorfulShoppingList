@@ -1,6 +1,6 @@
 package com.ipcoding.colorfulshoppinglist.feature.presentation.camera_open
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.hilt.navigation.compose.hiltViewModel

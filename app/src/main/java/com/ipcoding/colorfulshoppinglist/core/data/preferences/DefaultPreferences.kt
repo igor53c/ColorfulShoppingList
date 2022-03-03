@@ -74,7 +74,7 @@ class DefaultPreferences(
     }
 
     override fun loadItem(): Item? {
-        if(sharedPreferences.getInt(Preferences.ITEM_ID, -1) != -1) {
+        if (sharedPreferences.getInt(Preferences.ITEM_ID, -1) != -1) {
             sharedPreferences.getString(Preferences.ITEM_TEXT, null)?.let {
                 return Item(
                     title = it,

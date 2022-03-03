@@ -29,10 +29,10 @@ class ItemsViewModel @Inject constructor(
     private val _isImageDisplayed = mutableStateOf(true)
     val isImageDisplayed: State<Boolean> = _isImageDisplayed
 
-    private val _isDeleteDialogDisplayed  = mutableStateOf(false)
+    private val _isDeleteDialogDisplayed = mutableStateOf(false)
     val isDeleteDialogDisplayed: State<Boolean> = _isDeleteDialogDisplayed
 
-    private var itemToDelete : Item? = null
+    private var itemToDelete: Item? = null
 
     private var getItemsJob: Job? = null
 
@@ -53,7 +53,7 @@ class ItemsViewModel @Inject constructor(
         preferences.saveCurrentUrl(null)
         preferences.saveCurrentIsMarked(false)
         preferences.loadItem()?.let { item ->
-            if(item.id != -1) {
+            if (item.id != -1) {
                 viewModelScope.launch {
                     itemUseCases.updateItem(item)
                 }
@@ -63,10 +63,10 @@ class ItemsViewModel @Inject constructor(
     }
 
     fun onEvent(event: ItemsEvent) {
-        when(event) {
+        when (event) {
             is ItemsEvent.Order -> {
-                if(state.value.itemOrder::class == event.itemOrder::class) {
-                    when(state.value.itemOrder.orderType) {
+                if (state.value.itemOrder::class == event.itemOrder::class) {
+                    when (state.value.itemOrder.orderType) {
                         is OrderType.Ascending -> {
                             event.itemOrder.orderType = OrderType.Descending
                         }

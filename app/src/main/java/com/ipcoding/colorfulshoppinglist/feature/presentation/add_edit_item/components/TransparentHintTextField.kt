@@ -3,7 +3,9 @@ package com.ipcoding.colorfulshoppinglist.feature.presentation.add_edit_item.com
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusState
@@ -49,7 +51,7 @@ fun TransparentHintTextField(
                 disabledIndicatorColor = Color.Transparent,
             )
         )
-        if(isHintVisible) {
+        if (isHintVisible) {
             Text(
                 text = hint,
                 style = textStyle,

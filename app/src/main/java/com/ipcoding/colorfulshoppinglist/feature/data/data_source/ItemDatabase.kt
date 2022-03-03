@@ -8,7 +8,7 @@ import com.ipcoding.colorfulshoppinglist.feature.domain.model.Item
     entities = [Item::class],
     version = 1
 )
-abstract class ItemDatabase: RoomDatabase() {
+abstract class ItemDatabase : RoomDatabase() {
 
     abstract val itemDao: ItemDao
 

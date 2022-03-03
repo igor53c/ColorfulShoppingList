@@ -41,6 +41,8 @@ class ItemsEndToEndTest {
     private lateinit var iconMenu: String
     private lateinit var save: String
     private lateinit var withoutImage: String
+    private lateinit var deleteItem: String
+    private lateinit var yes: String
 
     @Before
     fun setUp() {
@@ -52,6 +54,8 @@ class ItemsEndToEndTest {
             iconMenu = stringResource(id = R.string.icon_menu)
             save = stringResource(id = R.string.save)
             withoutImage = stringResource(id = R.string.without_image)
+            deleteItem = stringResource(id = R.string.delete_item)
+            yes = stringResource(id = R.string.yes)
             navController = rememberNavController()
             AppTheme {
                 NavHost(
@@ -85,7 +89,7 @@ class ItemsEndToEndTest {
     }
 
     @Test
-    fun saveNewItem() {
+    fun saveNewItemAndDelete() {
 
         val testTitle = "test-title"
 
@@ -98,6 +102,12 @@ class ItemsEndToEndTest {
         composeRule.onNodeWithContentDescription(save).performClick()
 
         composeRule.onNodeWithText(testTitle).assertIsDisplayed()
+
+        composeRule.onNodeWithContentDescription(deleteItem).performClick()
+
+        composeRule.onNodeWithText(yes).performClick()
+
+        composeRule.onNodeWithText(testTitle).assertDoesNotExist()
     }
 
     @Test
@@ -140,5 +150,48 @@ class ItemsEndToEndTest {
             .assertTextContains("2")
         composeRule.onAllNodesWithTag(TestTags.NOTE_ITEM_WITHOUT_IMAGE)[2]
             .assertTextContains("1")
+    }
+
+    @Test
+    fun saveNewItems_orderByColor() {
+        for(i in 1..3) {
+            composeRule.onNodeWithContentDescription(addItem).performClick()
+
+            composeRule
+                .onNodeWithTag(TestTags.TITLE_TEXT_FIELD)
+                .performTextInput(i.toString())
+            composeRule.onNodeWithContentDescription(save).performClick()
+        }
+
+        composeRule.onNodeWithText("1").assertIsDisplayed()
+        composeRule.onNodeWithText("2").assertIsDisplayed()
+        composeRule.onNodeWithText("3").assertIsDisplayed()
+
+        composeRule.onNodeWithText("3").performClick()
+
+        composeRule
+            .onNodeWithContentDescription(sortByColor)
+            .performClick()
+
+        composeRule.onAllNodesWithTag(TestTags.NOTE_ITEM_WITH_IMAGE)[0]
+            .assertTextContains("3")
+        composeRule.onAllNodesWithTag(TestTags.NOTE_ITEM_WITH_IMAGE)[1]
+            .assertTextContains("1")
+        composeRule.onAllNodesWithTag(TestTags.NOTE_ITEM_WITH_IMAGE)[2]
+            .assertTextContains("2")
+
+        composeRule.onNodeWithContentDescription(iconMenu).performClick()
+        composeRule.onNodeWithText(withoutImage).performClick()
+
+        composeRule.onAllNodesWithTag(TestTags.NOTE_ITEM_WITH_IMAGE)[0].assertDoesNotExist()
+        composeRule.onAllNodesWithTag(TestTags.NOTE_ITEM_WITH_IMAGE)[1].assertDoesNotExist()
+        composeRule.onAllNodesWithTag(TestTags.NOTE_ITEM_WITH_IMAGE)[2].assertDoesNotExist()
+
+        composeRule.onAllNodesWithTag(TestTags.NOTE_ITEM_WITHOUT_IMAGE)[0]
+            .assertTextContains("3")
+        composeRule.onAllNodesWithTag(TestTags.NOTE_ITEM_WITHOUT_IMAGE)[1]
+            .assertTextContains("1")
+        composeRule.onAllNodesWithTag(TestTags.NOTE_ITEM_WITHOUT_IMAGE)[2]
+            .assertTextContains("2")
     }
 }

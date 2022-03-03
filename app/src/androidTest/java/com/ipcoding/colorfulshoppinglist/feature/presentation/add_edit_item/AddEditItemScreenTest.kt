@@ -1,11 +1,9 @@
-package com.ipcoding.colorfulshoppinglist.feature.presentation.items
+package com.ipcoding.colorfulshoppinglist.feature.presentation.add_edit_item
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.test.assertHasClickAction
+import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.onNodeWithContentDescription
-import androidx.compose.ui.test.performClick
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -15,7 +13,7 @@ import androidx.navigation.navArgument
 import com.ipcoding.colorfulshoppinglist.R
 import com.ipcoding.colorfulshoppinglist.di.AppModule
 import com.ipcoding.colorfulshoppinglist.feature.presentation.MainActivity
-import com.ipcoding.colorfulshoppinglist.feature.presentation.add_edit_item.AddEditItemScreen
+import com.ipcoding.colorfulshoppinglist.feature.presentation.items.ItemsScreen
 import com.ipcoding.colorfulshoppinglist.feature.presentation.util.Screen
 import com.ipcoding.colorfulshoppinglist.ui.theme.AppTheme
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -27,7 +25,7 @@ import org.junit.Test
 
 @HiltAndroidTest
 @UninstallModules(AppModule::class)
-class ItemsScreenTest {
+class AddEditItemScreenTest {
 
     @get:Rule(order = 0)
     val hiltRule = HiltAndroidRule(this)
@@ -36,19 +34,17 @@ class ItemsScreenTest {
     val composeRule = createAndroidComposeRule<MainActivity>()
 
     private lateinit var navController: NavHostController
-    private lateinit var sortByAlpha: String
-    private lateinit var sortByColor: String
+    private lateinit var save: String
+    private lateinit var itemCantEmpty: String
     private lateinit var addItem: String
-    private lateinit var iconMenu: String
 
     @Before
     fun setUp() {
         hiltRule.inject()
         composeRule.setContent {
-            sortByAlpha = stringResource(id = R.string.sort_by_alpha)
-            sortByColor = stringResource(id = R.string.sort_by_color)
+            save = stringResource(id = R.string.save)
+            itemCantEmpty = stringResource(id = R.string.item_cant_empty)
             addItem = stringResource(id = R.string.add_item)
-            iconMenu = stringResource(id = R.string.icon_menu)
             navController = rememberNavController()
             AppTheme {
                 NavHost(
@@ -82,10 +78,9 @@ class ItemsScreenTest {
     }
 
     @Test
-    fun allButtons_areClickable() {
-        composeRule.onNodeWithContentDescription(sortByAlpha).assertHasClickAction()
-        composeRule.onNodeWithContentDescription(sortByColor).assertHasClickAction()
-        composeRule.onNodeWithContentDescription(addItem).assertHasClickAction()
-        composeRule.onNodeWithContentDescription(iconMenu).assertHasClickAction()
+    fun emptyText_throwsErrorMessage () {
+        composeRule.onNodeWithContentDescription(addItem).performClick()
+        composeRule.onNodeWithContentDescription(save).performClick()
+        composeRule.onNodeWithText(itemCantEmpty).assertIsDisplayed()
     }
 }

@@ -25,7 +25,7 @@ fun ChangeListView(
     val isImageDisplayed = viewModel.isImageDisplayed.value
 
     AlertDialog(
-        backgroundColor = AppTheme.colors.primary,
+        backgroundColor = AppTheme.colors.secondary,
         onDismissRequest = onDismissRequest,
         title = {
             Column(
@@ -35,7 +35,7 @@ fun ChangeListView(
                 Text(
                     text = stringResource(id = R.string.show_items),
                     style = AppTheme.typography.h5,
-                    color = AppTheme.colors.background,
+                    color = AppTheme.colors.primary,
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -52,14 +52,14 @@ fun ChangeListView(
                             onDismissRequest()
                         },
                         colors = RadioButtonDefaults.colors(
-                            selectedColor = AppTheme.colors.background,
-                            unselectedColor = AppTheme.colors.background
+                            selectedColor = AppTheme.colors.primary,
+                            unselectedColor = AppTheme.colors.primary
                         )
                     )
                     Text(
                         text = stringResource(id = R.string.with_image),
                         style = AppTheme.typography.h6,
-                        color = AppTheme.colors.background,
+                        color = AppTheme.colors.primary,
                         modifier = Modifier
                             .clickable(onClick = {
                                 viewModel.onEvent(ItemsEvent.ItemWithImage)
@@ -78,14 +78,14 @@ fun ChangeListView(
                             onDismissRequest()
                         },
                         colors = RadioButtonDefaults.colors(
-                            selectedColor = AppTheme.colors.background,
-                            unselectedColor = AppTheme.colors.background
+                            selectedColor = AppTheme.colors.primary,
+                            unselectedColor = AppTheme.colors.primary
                         )
                     )
                     Text(
                         text = stringResource(id = R.string.without_image),
                         style = AppTheme.typography.h6,
-                        color = AppTheme.colors.background,
+                        color = AppTheme.colors.primary,
                         modifier = Modifier
                             .clickable(onClick = {
                                 viewModel.onEvent(ItemsEvent.ItemWithoutImage)

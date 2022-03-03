@@ -1,10 +1,8 @@
 <resources>
-    <string name="app_name">ColorfulShoppingList</string>
+    <string name="app_name">List</string>
 
     <string name="delete_item">Delete item</string>
     <string name="edit_item">Edit item</string>
-    <string name="item_deleted">Item deleted</string>
-    <string name="undo">Undo</string>
     <string name="sort_by_alpha">Sort by alpha</string>
     <string name="sort_by_color">Sort by color</string>
     <string name="add_item">Add item</string>
@@ -24,4 +22,7 @@
     <string name="show_items">Show items:</string>
     <string name="without_image">without image</string>
     <string name="with_image">with image</string>
+    <string name="really_delete_item">Do you really want to delete the item?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

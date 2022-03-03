@@ -29,7 +29,10 @@ class ItemsViewModel @Inject constructor(
     private val _isImageDisplayed = mutableStateOf(true)
     val isImageDisplayed: State<Boolean> = _isImageDisplayed
 
-    private var recentlyDeletedItem: Item? = null
+    private val _isDeleteDialogDisplayed  = mutableStateOf(false)
+    val isDeleteDialogDisplayed: State<Boolean> = _isDeleteDialogDisplayed
+
+    private var itemToDelete : Item? = null
 
     private var getItemsJob: Job? = null
 
@@ -74,12 +77,6 @@ class ItemsViewModel @Inject constructor(
                 }
                 getItems(event.itemOrder)
             }
-            is ItemsEvent.DeleteItem -> {
-                viewModelScope.launch {
-                    itemUseCases.deleteItem(event.item)
-                    recentlyDeletedItem = event.item
-                }
-            }
             is ItemsEvent.UpdateItem -> {
                 viewModelScope.launch {
                     itemUseCases.changeItemIsMarked(event.item)
@@ -89,11 +86,19 @@ class ItemsViewModel @Inject constructor(
                 list.remove(event.item)
                 _state.value.items = list
             }
-            is ItemsEvent.RestoreItem -> {
+            is ItemsEvent.DeleteItem -> {
                 viewModelScope.launch {
-                    itemUseCases.updateItem(recentlyDeletedItem ?: return@launch)
-                    recentlyDeletedItem = null
+                    itemToDelete?.let { itemUseCases.deleteItem(it) }
                 }
+                _isDeleteDialogDisplayed.value = false
+                itemToDelete = null
+            }
+            is ItemsEvent.OnDeleteItemClick -> {
+                _isDeleteDialogDisplayed.value = true
+                itemToDelete = event.item
+            }
+            is ItemsEvent.CloseDeleteItemView -> {
+                _isDeleteDialogDisplayed.value = false
             }
             is ItemsEvent.ItemWithImage -> {
                 _isImageDisplayed.value = true

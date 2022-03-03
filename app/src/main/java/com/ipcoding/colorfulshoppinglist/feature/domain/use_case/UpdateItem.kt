@@ -7,7 +7,6 @@ class UpdateItem(
     private val repository: ItemRepository
 ) {
     suspend operator fun invoke(item: Item) {
-
         repository.insertItem(item)
     }
 }

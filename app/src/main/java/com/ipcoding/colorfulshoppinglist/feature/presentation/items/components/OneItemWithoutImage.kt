@@ -24,6 +24,7 @@ import com.ipcoding.colorfulshoppinglist.ui.theme.AppTheme
 
 @Composable
 fun OneItemWithoutImage(
+    modifier: Modifier,
     item: Item,
     onEditClick: () -> Unit,
     onDeleteClick: () -> Unit
@@ -43,7 +44,7 @@ fun OneItemWithoutImage(
     }
 
     Row(
-        modifier = Modifier
+        modifier = modifier
             .background(
                 color = backgroundColor.value,
                 shape = AppTheme.customShapes.roundedCornerShape

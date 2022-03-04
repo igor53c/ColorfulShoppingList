@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.material.Surface
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -24,29 +23,17 @@ import java.io.File
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val isStatusBarVisibleLiveData = MutableLiveData(false)
-
-    override fun onResume() {
-        super.onResume()
-        isStatusBarVisibleLiveData.value = false
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val systemUiController = rememberSystemUiController()
-            systemUiController.isStatusBarVisible = false
-
-            isStatusBarVisibleLiveData.observeForever {
-                systemUiController.isStatusBarVisible = it
-            }
-
             AppTheme {
                 Surface(
                     color = AppTheme.colors.background
                 ) {
                     val navController = rememberNavController()
+                    val systemUiController = rememberSystemUiController()
                     systemUiController.setNavigationBarColor(color = AppTheme.colors.primary)
+                    systemUiController.setStatusBarColor(color = AppTheme.colors.primary)
 
                     NavHost(
                         navController = navController,

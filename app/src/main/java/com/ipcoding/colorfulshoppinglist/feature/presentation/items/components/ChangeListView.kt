@@ -27,20 +27,23 @@ fun ChangeListView(
     AlertDialog(
         backgroundColor = AppTheme.colors.secondary,
         onDismissRequest = onDismissRequest,
-        title = {
+        text = {
+            Text(
+                text = stringResource(id = R.string.show_items),
+                style = AppTheme.typography.h5,
+                color = AppTheme.colors.primary,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .height(AppTheme.dimensions.spaceLarge)
+                    .fillMaxWidth()
+            )
+        },
+        confirmButton = {
             Column(
-                modifier = Modifier.padding(bottom = AppTheme.dimensions.spaceSmall),
+                modifier = Modifier
+                    .padding(bottom = AppTheme.dimensions.spaceSmall),
                 verticalArrangement = Arrangement.Center
             ) {
-                Text(
-                    text = stringResource(id = R.string.show_items),
-                    style = AppTheme.typography.h5,
-                    color = AppTheme.colors.primary,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                )
-
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
@@ -94,7 +97,6 @@ fun ChangeListView(
                     )
                 }
             }
-        },
-        confirmButton = {}
+        }
     )
 }
